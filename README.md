@@ -1,21 +1,31 @@
 <div align="center">
 
-# DUM-E
-
-**A read-only homelab copilot — observe, explain, propose. Never execute alone.**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/header-dark.svg">
+  <img src="docs/readme/header-light.svg" width="100%" alt="DUM-E — read-only homelab copilot, human approval gate">
+</picture>
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Pi Agent](https://img.shields.io/badge/Built_on-pi-111?style=flat-square)](https://github.com/mariozechner/pi)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey?style=flat-square)](https://kernel.org/)
 
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/divider-dark.svg">
+  <img src="docs/readme/divider-light.svg" width="100%" alt="">
+</picture>
 
----
+</div>
 
 ## Why it exists
 
 Homelabs are powerful and fragile: GPUs, containers, backups, and schedules fail in ways that are hard to explain at 2 a.m. **DUM-E** is a **local, tool-restricted maintenance assistant** that reads machine state and your documentation, explains what is going on, and **proposes** fixes — while **destructive or state-changing work always waits for explicit human approval** in a separate terminal.
+
+## Highlights
+
+- 🔍 **Read-only observability** — GPU, disks, services, containers, logs, backups
+- 🛡️ **Proposal gate** — `propose_action` → owner runs `dume approve <ID>`
+- 📚 **Structured knowledge** — manuals, runbooks, and graph under `knowledge/`
 
 ## Features
 
@@ -97,10 +107,4 @@ Details: `knowledge/manuals/09-security-and-boundaries.md`, `knowledge/manuals/1
 
 ---
 
-<div align="center">
-
-**MIT** — see [LICENSE](./LICENSE)
-
-Built by **[Vector26](https://github.com/Vector26)** · Safety-first homelab AI
-
-</div>
+[Vector26](https://github.com/Vector26) · [MIT License](LICENSE)
