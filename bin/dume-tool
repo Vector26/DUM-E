@@ -1,0 +1,59 @@
+#!/usr/bin/python3 -I
+"""DUM-E tool gateway. The agent user `dume` may run ONLY this, as the owner, via one sudoers rule.
+
+It runs read-only tools, or creates proposals that only the owner can approve (`dume approve`).
+Python runs isolated (-I): environment variables and user site-packages are ignored.
+"""
+
+import json
+import os
+import pwd
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "lib"))
+
+from dume import actions, core, knowledge, tools  # noqa: E402
+
+TOOLS = dict(tools.TOOLS)
+TOOLS["manual"] = knowledge.manual
+TOOLS["graph"] = knowledge.graph
+TOOLS["propose_action"] = lambda a: actions.propose(str(a.get("action", "")), a.get("args") or {})
+TOOLS["action_status"] = lambda a: actions.status(str(a.get("id", "")))
+TOOLS["propose_knowledge_edit"] = knowledge.propose_edit
+
+
+def main() -> int:
+    if os.getuid() != pwd.getpwnam(core.OWNER).pw_uid:
+        print("dume-tool must run as the owner account (through the dume sudoers rule).")
+        return 2
+    if len(sys.argv) != 2 or sys.argv[1] not in TOOLS:
+        print("Unknown tool. Available: " + ", ".join(sorted(TOOLS)))
+        return 2
+    name = sys.argv[1]
+    raw = sys.stdin.read(65536) if not sys.stdin.isatty() else ""
+    try:
+        args = json.loads(raw) if raw.strip() else {}
+        if not isinstance(args, dict):
+            raise ValueError("arguments must be a JSON object")
+    except Exception as exc:
+        print(f"Bad arguments: {exc}")
+        return 2
+    started = time.time()
+    try:
+        text = TOOLS[name](args)
+        ok = True
+    except actions.ActionError as exc:
+        text, ok = f"Refused: {exc}", False
+    except Exception as exc:  # report, never crash the conversation
+        text, ok = f"Tool error ({type(exc).__name__}): {exc}", False
+    text = core.cap(core.redact(text or ""))
+    core.audit("tool", tool=name, args=args, ok=ok, seconds=round(time.time() - started, 2),
+               chars=len(text))
+    print(text)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

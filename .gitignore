@@ -1,0 +1,30 @@
+# Runtime / local state
+state/
+*.log
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+auth.json
+gitToken
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Knowledge edit history (may contain pre-redaction snapshots)
+knowledge/.history/
+
+# Install backups
+*.bak-*

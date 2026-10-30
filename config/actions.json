@@ -1,0 +1,182 @@
+{
+  "_comment": "DUM-E approvable actions. DUM-E can only PROPOSE these; the owner approves and runs them with `dume approve <id>`. Every entry MUST declare `deletes` (list, or the string 'none') and a `class`: mutates | housekeeping | permanent_delete. The loader refuses the file if either is missing (Deletion Mandate M4).",
+  "llama_start": {
+    "summary": "Start the AI brain (llama-server on :8081, model chosen by the start script, default default quant).",
+    "argv": [
+      "{home}/bin/llama-server-ctl",
+      "start"
+    ],
+    "args": {},
+    "deletes": "none",
+    "class": "mutates",
+    "timeout": 420,
+    "warnings": [
+      "Uses most of the GPU memory. The VRAM watchdog may pause it again if VRAM runs low.",
+      "Unloads any Ollama model from the GPU first (LLAMA_OFFLOAD_OLLAMA=1)."
+    ]
+  },
+  "llama_stop": {
+    "summary": "Stop the AI brain. Jarvis, Virtual Self and the Personal Feed lose their model; DUM-E chat stops working until it is started again.",
+    "argv": [
+      "{home}/bin/llama-server-ctl",
+      "stop"
+    ],
+    "args": {},
+    "deletes": [
+      "{home}/.local/state/llama-server-ctl.pid (the server's own pid file)"
+    ],
+    "class": "housekeeping",
+    "timeout": 60,
+    "warnings": [
+      "This ends the current DUM-E conversation's model."
+    ]
+  },
+  "llama_restart": {
+    "summary": "Restart the AI brain (stop, then start).",
+    "argv": [
+      "{home}/bin/llama-server-ctl",
+      "restart"
+    ],
+    "args": {},
+    "deletes": [
+      "{home}/.local/state/llama-server-ctl.pid (the server's own pid file)"
+    ],
+    "class": "housekeeping",
+    "timeout": 480,
+    "warnings": [
+      "Interrupts every client of :8081 for a minute or two."
+    ]
+  },
+  "ollama_unload": {
+    "summary": "Unload every Ollama model from GPU memory (keep_alive 0). Models stay on disk.",
+    "builtin": "ollama_unload",
+    "args": {},
+    "deletes": "none",
+    "class": "mutates",
+    "timeout": 60,
+    "warnings": []
+  },
+  "service_start": {
+    "summary": "Start one Homelab service through Homelab Control (fortress start <id>).",
+    "argv": [
+      "{homelab}/control/fortress",
+      "start",
+      "{service_id}"
+    ],
+    "args": {
+      "service_id": {
+        "type": "service_id",
+        "exclude": [
+          "ai_llama",
+          "vram_watchdog",
+          "immich",
+          "mediastack",
+          "virtual_self_archive",
+          "vitalis"
+        ]
+      }
+    },
+    "deletes": "none",
+    "class": "mutates",
+    "timeout": 300,
+    "warnings": [
+      "GPU services pass through Homelab Control's GPU guard, which may refuse.",
+      "Not offered for immich (must be started with its --env-file, see manual 21) or mediastack (its data disk /mnt/movie-storage is not mounted; downloads would land on the full root disk, see manual 22).",
+      "Not offered for virtual_self_archive (Homelab Control ignores compose profiles, so it would act on the main Virtual Self stack) or vitalis (never deployed). See manuals 35 and 37."
+    ]
+  },
+  "service_stop": {
+    "summary": "Stop one Homelab service through Homelab Control (fortress stop <id>; compose services use 'docker compose stop', which keeps containers and data).",
+    "argv": [
+      "{homelab}/control/fortress",
+      "stop",
+      "{service_id}"
+    ],
+    "args": {
+      "service_id": {
+        "type": "service_id",
+        "exclude": [
+          "ai_llama",
+          "vram_watchdog",
+          "orchestration",
+          "notifier",
+          "monitoring",
+          "virtual_self_archive"
+        ]
+      }
+    },
+    "deletes": "none",
+    "class": "mutates",
+    "timeout": 300,
+    "warnings": [
+      "Dependent services stop working.",
+      "Not offered for virtual_self_archive: Homelab Control ignores compose profiles and would stop the whole Virtual Self stack."
+    ]
+  },
+  "watchdog_restart": {
+    "summary": "Restart the VRAM watchdog (fortress stop vram_watchdog, then fortress start vram_watchdog).",
+    "builtin": "watchdog_restart",
+    "args": {},
+    "deletes": "none",
+    "class": "mutates",
+    "timeout": 60,
+    "warnings": [
+      "If the AI is paused and the GPU is quiet, the watchdog resumes the AI within about a minute."
+    ]
+  },
+  "watchdog_clear_pause": {
+    "summary": "Remove the watchdog's pause flag and start the AI brain now, overriding the watchdog's wait.",
+    "builtin": "watchdog_clear_pause",
+    "args": {},
+    "deletes": [
+      "{home}/.local/state/fortress-vram-watchdog/ai-paused (the watchdog's pause flag)"
+    ],
+    "class": "housekeeping",
+    "timeout": 420,
+    "warnings": [
+      "Overrides the VRAM safety pause. If the GPU is busy, the AI may run out of memory or be paused again."
+    ]
+  },
+  "backup_run_daily": {
+    "summary": "Run the daily off-site backup now, the same way cron does (vault-backup/scripts/cron-daily.sh: takes the backup lock, skips if another backup holds it, logs to cron-daily.log, reports failures as incidents).",
+    "argv": [
+      "{homelab}/vault-backup/scripts/cron-daily.sh"
+    ],
+    "args": {},
+    "deletes": [
+      "old restic snapshots beyond keep-daily 14 / keep-weekly 8 / keep-monthly 12 (restic forget --prune, PERMANENT)",
+      "temporary work and plaintext files the backup creates for itself"
+    ],
+    "class": "permanent_delete",
+    "typed_phrase": "PRUNE",
+    "timeout": null,
+    "stream": false,
+    "warnings": [
+      "Skips immediately if another backup holds /mnt/backup-volume/vault-backup/run.lock (on 2026-10-29 the photos bootstrap upload had held it for weeks).",
+      "Output goes to /mnt/backup-volume/vault-backup/logs/cron-daily.log (DUM-E: log_tail log=vault_cron_daily). This terminal stays busy until the run ends; it can take hours.",
+      "Retention runs after a successful backup: restic forget --prune deletes older snapshots permanently."
+    ]
+  },
+  "docker_image_cleanup_run": {
+    "summary": "Run the weekly Docker image cleanup now: the same script cron runs on Sundays 07:30 (homelab/control/docker-image-cleanup.py --apply). IMAGES ONLY, volumes are never touched. Always show the owner image_cleanup_preview first.",
+    "argv": [
+      "/usr/bin/python3",
+      "{homelab}/control/docker-image-cleanup.py",
+      "--apply"
+    ],
+    "args": {},
+    "deletes": [
+      "Docker images that no container uses (cine-immich images and anything in docker-image-cleanup.keep are skipped)",
+      "Stopped containers of registered Homelab stacks that have been stopped 7+ days, whose image can be pulled again and that hold no files of their own (removed WITHOUT their volumes; cine-immich skipped)"
+    ],
+    "class": "permanent_delete",
+    "typed_phrase": "PRUNE IMAGES",
+    "timeout": 900,
+    "stream": false,
+    "warnings": [
+      "Volumes are never deleted: the script cannot issue a volume command, and the docker guard refuses them too.",
+      "Locally built images that nothing uses (for example virtual-self-memory rollback tags) are removed and cannot be pulled back. The owner protects one by adding its name to homelab/control/docker-image-cleanup.keep.",
+      "A removed stack's image is pulled or rebuilt again the next time that stack is started."
+    ]
+  }
+}

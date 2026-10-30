@@ -1,0 +1,293 @@
+#!/usr/bin/python3 -I
+"""dume — the owner's control for DUM-E, the Fortress maintenance agent.
+
+DUM-E never runs by itself: nothing is scheduled, nothing runs in the background.
+It only works while you talk to it (`dume`), and it can only change things you approve
+here with `dume approve <ID>`.
+"""
+
+import json
+import os
+import pwd
+import re
+import shutil
+import subprocess
+import sys
+import time
+
+_ROOT = __import__("pathlib").Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_ROOT / "lib"))
+
+from dume import actions, core, knowledge, tools  # noqa: E402
+
+OPT = "/opt/dume"
+NODE = f"{OPT}/node/bin/node"
+PI_CLI = f"{OPT}/pi/dist/cli.js"
+EXTENSION = f"{OPT}/ext/dume.ts"
+PROMPT = core.ROOT / "prompts" / "system.md"
+AGENT_HOME = "/var/lib/dume"
+MODEL = os.environ.get("DUME_MODEL", "your-local-model-id")
+
+HELP = """\
+dume                      talk to DUM-E (interactive). Extra pi flags pass through, e.g. dume -c (continue last chat)
+dume ask "question"       one question, one answer, then exit
+dume status               machine overview without the AI (deterministic)
+dume doctor               look for known problems without the AI, and name the runbook for each
+dume pending              proposals waiting for your approval
+dume show <ID>            show one proposal in full
+dume approve <ID>         review and run a proposal (you type y, or the shown phrase for permanent deletions)
+dume reject <ID>          refuse a proposal
+dume manual [name [section]]   read DUM-E's manuals, runbooks (runbook:<name>) or glossary
+dume search <words>       search manuals, runbooks, glossary and the Fortress docs library
+dume tool <name> [json]   run one read-only DUM-E tool yourself (same output DUM-E sees)
+dume rebuild-graph        rebuild the knowledge graph from the current files
+dume audit [N]            last N audit-log entries (default 30)
+dume help                 this text
+
+DUM-E can read, explain and PROPOSE. Only you can approve. It cannot delete anything without your approval."""
+
+
+def owner_only() -> None:
+    if os.getuid() != pwd.getpwnam(core.OWNER).pw_uid or os.environ.get("SUDO_USER"):
+        sys.exit(f"dume is the owner's command; run it as '{core.OWNER}' without sudo.")
+
+
+def installed() -> bool:
+    try:
+        pwd.getpwnam(core.AGENT_USER)
+    except KeyError:
+        return False
+    return os.path.exists(PI_CLI) and os.path.exists(EXTENSION) and os.path.exists("/etc/sudoers.d/dume")
+
+
+MODELQ_URL = "http://127.0.0.1:8181"
+MODELQ_UNIT = "fortress-modelq.service"
+
+
+def ensure_modelq() -> bool:
+    """DUM-E's pi provider talks to the model queue (:8181), not the brain (:8081) directly."""
+    if core.http_get(MODELQ_URL + "/health")[0] == 200:
+        return True
+    print("The model queue (:8181) is not answering. Starting it (systemctl --user start %s)..." % MODELQ_UNIT)
+    core.audit("owner_started_modelq", via="dume preflight autofix")
+    core.run(["systemctl", "--user", "start", MODELQ_UNIT], timeout=20)
+    for _ in range(10):
+        if core.http_get(MODELQ_URL + "/health")[0] == 200:
+            return True
+        time.sleep(1)
+    print("The model queue still does not answer. See: dume manual runbook:model-queue-down")
+    return False
+
+
+def ensure_ai() -> bool:
+    code, _ = core.http_get(core.LLAMA_URL + "/health")
+    if code == 200:
+        return ensure_modelq()
+    print("The AI brain (:8081) is not answering, so DUM-E cannot talk yet.\n")
+    print(tools.ai_brain({}))
+    print("\nYou can still use: dume status, dume doctor, dume manual, dume search.")
+    if not sys.stdin.isatty():
+        return False
+    if (core.WATCHDOG_DIR / "ai-paused").exists():
+        print("\nThe VRAM watchdog paused it on purpose. It resumes by itself when VRAM is free and the GPU is quiet.")
+    answer = input("\nStart the AI brain now (llama-hauhaucs-server start)? Type y to start: ").strip().lower()
+    if answer != "y":
+        return False
+    core.audit("owner_started_ai", via="dume chat prompt")
+    rc = subprocess.run([str(core.LLAMA_CTL), "start"], env=core.SAFE_ENV).returncode
+    return rc == 0 and core.http_get(core.LLAMA_URL + "/health")[0] == 200
+
+
+def launch(extra: list[str], print_mode: str | None = None) -> None:
+    if not installed():
+        sys.exit(f"DUM-E is not installed yet. Run:  bash {core.ROOT}/install.sh")
+    if not ensure_ai():
+        sys.exit(1)
+    prompt = PROMPT.read_text()
+    pi_args = ["--no-tools", "--no-extensions", "--no-skills", "-e", EXTENSION,
+               "--system-prompt", prompt, "--provider", "homelab", "--model", MODEL,
+               "--session-dir", f"{AGENT_HOME}/sessions"]
+    if print_mode is not None:
+        pi_args += ["-p", print_mode]
+    gateway = str(core.ROOT / "bin" / "dume-tool")
+    cmd = ["sudo", "-n", "-u", core.AGENT_USER, "-H", "--", "/bin/sh", "-c", 'cd "$HOME" && exec "$@"', "sh",
+           "/usr/bin/env", "PI_TELEMETRY=0", "PI_DUME=1", f"DUME_GATEWAY={gateway}", f"DUME_OWNER={core.OWNER}",
+           NODE, PI_CLI] + pi_args + extra
+    core.audit("chat_start", mode="print" if print_mode else "interactive")
+    os.execvp("sudo", cmd)
+
+
+HEAL = str(core.FORTRESS / "agents" / "scripts" / "agent-heal")
+HEAL_COVERED = ("brain", "modelq", "gateway")  # doctor already reports these directly
+HEAL_RUNBOOK = {
+    "completion": "runbook:model-queue-down",
+    "container_to_queue": "runbook:model-queue-down",
+    "gateway_path": "runbook:agent-gateway-down",
+    "oda_preview": "runbook:oda-preview-down",
+    "vself_api": "runbook:agent-container-down",
+    "n8n": "runbook:agent-container-down",
+}
+
+
+def heal_findings() -> list[tuple[str, str]]:
+    """Read-only: ask agent-heal (--check never changes anything) what is wrong with the agent platform."""
+    rc, out = core.run([HEAL, "--check", "--json"], timeout=90)
+    try:
+        rows = json.loads(out[out.index("["):out.rindex("]") + 1])
+    except ValueError:
+        return [("agent-heal could not run: " + (out.strip().splitlines() or ["no output"])[-1][:120],
+                 "runbook:agent-heal")]
+    found = []
+    for row in rows:
+        if row["ok"] or row["check"] in HEAL_COVERED:
+            continue
+        name = row["check"]
+        book = HEAL_RUNBOOK.get(name) or ("runbook:agent-container-down" if name.startswith("container:")
+                                          else "runbook:agent-heal")
+        found.append((f"agent-heal {name}: {row['detail']}", book))
+    return found
+
+
+def doctor() -> int:
+    findings = []
+    llama = tools._llama_process()
+    code, _ = core.http_get(core.LLAMA_URL + "/health")
+    wd = tools._watchdog_state()
+    if "paused_since" in wd:
+        findings.append(("AI brain paused by the VRAM watchdog since " + wd["paused_since"], "runbook:ai-down"))
+    elif not llama or code != 200:
+        findings.append(("AI brain not running or not answering on :8081", "runbook:ai-down"))
+    if code == 200 and core.http_get(MODELQ_URL + "/health")[0] != 200:
+        findings.append(("Model queue not answering on :8181 (DUM-E, Dexter, Detective, flowsmith cannot reach the AI)",
+                         "runbook:model-queue-down"))
+    if core.http_get("http://127.0.0.1:8190/health")[0] != 200:
+        findings.append(("Agent gateway not answering on :8190", "runbook:model-queue-down"))
+    findings += heal_findings()
+    if not wd["running"]:
+        findings.append(("VRAM watchdog is not running", "runbook:watchdog"))
+    g = tools._gpu_query()
+    if "error" in g:
+        findings.append(("GPU not readable: " + g["error"], "runbook:gpu-vram"))
+    elif g["free"].isdigit() and int(g["free"]) < 2048:
+        findings.append((f"Free VRAM is low ({g['free']} MiB)", "runbook:gpu-vram"))
+    rc, df = core.run(["df", "--output=pcent,target", "-x", "tmpfs", "-x", "devtmpfs", "-x", "squashfs",
+                       "-x", "overlay", "-x", "efivarfs"], timeout=10)
+    for line in df.splitlines()[1:]:
+        pct, target = line.split(None, 1)
+        if int(pct.rstrip("%")) >= 90:
+            findings.append((f"Filesystem {target} is {pct} full", "runbook:disk-full"))
+    rc, ps = core.run(["docker", "ps", "-a", "--format", "{{.Names}} {{.Status}}"], timeout=20)
+    for line in ps.splitlines():
+        if "unhealthy" in line or "Restarting" in line:
+            findings.append((f"Container {line}", "runbook:container-unhealthy"))
+    cache = core.load_json(core.CACHE / "health.json")
+    if cache:
+        age = core.human_age(time.time() - (core.CACHE / "health.json").stat().st_mtime)
+        for r in cache["results"]:
+            if not r["ok"]:
+                book = "runbook:backup-failing" if r["id"].startswith("vault") else "runbook:service-not-running"
+                findings.append((f"Health ({age} old): {r['id']}: {'; '.join(r['problems'])}", book))
+    else:
+        findings.append(("No recent health check cached (dume tool health runs one; it can take ~5 min)",
+                         "runbook:health-alerts"))
+    pending = actions.list_pending()
+    if pending:
+        findings.append((f"{len(pending)} proposal(s) waiting for you (dume pending)", "manual:11-dume"))
+    if not findings:
+        print("No known problems found.")
+        return 0
+    print("Findings (read the runbook with: dume manual <runbook>):")
+    for text, book in findings:
+        print(f"  - {text}\n      -> {book}")
+    return 1
+
+
+def show(pid: str) -> int:
+    pid = pid.strip().upper()
+    for folder in (core.PENDING, core.RESULTS):
+        record = core.load_json(folder / f"{pid}.json")
+        if record:
+            record = {k: v for k, v in record.items() if k not in ("new_content",)}
+            print(json.dumps(record, indent=2, default=str))
+            return 0
+    print(f"No proposal {pid}.")
+    return 1
+
+
+def pending_list() -> int:
+    rows = actions.list_pending()
+    if not rows:
+        print("No proposals waiting.")
+        return 0
+    for r in rows:
+        state = "EXPIRED" if r.get("expires", 0) < time.time() else "waiting"
+        what = r.get("action") or f"{r.get('op')} {os.path.basename(r.get('file', ''))} # {r.get('section')}"
+        args = json.dumps(r.get("args")) if r.get("args") else ""
+        print(f"{r['id']}  {time.strftime('%H:%M', time.localtime(r['created']))}  {state:7}  {what} {args}")
+        if r.get("deletes") not in (None, "none"):
+            print(f"        deletes: {'; '.join(r['deletes'])}")
+    print("Approve with: dume approve <ID>   Refuse with: dume reject <ID>")
+    return 0
+
+
+def main(argv: list[str]) -> int:
+    owner_only()
+    if not argv or argv[0].startswith("-"):
+        launch(argv)
+    cmd, rest = argv[0], argv[1:]
+    if cmd == "chat":
+        launch(rest)
+    if cmd == "ask":
+        if not rest:
+            sys.exit('usage: dume ask "question"')
+        launch([], " ".join(rest))
+    if cmd in ("help", "-h", "--help"):
+        print(HELP)
+        return 0
+    if cmd == "status":
+        print(tools.snapshot({}))
+        return 0
+    if cmd == "doctor":
+        return doctor()
+    if cmd == "pending":
+        return pending_list()
+    if cmd == "show" and rest:
+        return show(rest[0])
+    if cmd == "approve" and rest:
+        return actions.approve(rest[0])
+    if cmd == "reject" and rest:
+        return actions.reject(rest[0])
+    if cmd == "manual":
+        args = {"action": "read", "name": rest[0]} if rest else {"action": "list"}
+        if len(rest) > 1:
+            args["section"] = " ".join(rest[1:])
+        out = knowledge.manual(args)
+        pager = shutil.which("less") if sys.stdout.isatty() and out.count("\n") > 40 else None
+        if pager:
+            subprocess.run([pager, "-R"], input=out, text=True)
+        else:
+            print(out)
+        return 0
+    if cmd == "search" and rest:
+        print(knowledge.search(" ".join(rest)))
+        return 0
+    if cmd == "tool" and rest:
+        name = rest[0]
+        payload = rest[1] if len(rest) > 1 else "{}"
+        proc = subprocess.run([str(core.ROOT / "bin" / "dume-tool"), name], input=payload, text=True)
+        return proc.returncode
+    if cmd == "rebuild-graph":
+        from dume import graph
+        print(graph.build())
+        return 0
+    if cmd == "audit":
+        n = int(rest[0]) if rest and rest[0].isdigit() else 30
+        if core.AUDIT_LOG.exists():
+            print(core.tail_file(core.AUDIT_LOG, n))
+        return 0
+    print(HELP)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

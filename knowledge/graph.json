@@ -1,0 +1,5457 @@
+{
+ "built_at": "2026-10-30 13:55:29 +0530",
+ "nodes": [
+  {
+   "id": "service:orchestration",
+   "type": "Service",
+   "name": "Portainer",
+   "source": "~/homelab/control/services.yaml#orchestration",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Web UI to manage Docker stacks",
+    "compose": "~/homelab/orchestration"
+   }
+  },
+  {
+   "id": "compose:~/homelab/orchestration",
+   "type": "ComposeDir",
+   "name": "~/homelab/orchestration",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-portainer",
+   "type": "Container",
+   "name": "fortress-portainer",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:n8n",
+   "type": "Service",
+   "name": "Workflows (n8n)",
+   "source": "~/homelab/control/services.yaml#n8n",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Automation and scheduled jobs",
+    "compose": "~/homelab/n8n"
+   }
+  },
+  {
+   "id": "compose:~/homelab/n8n",
+   "type": "ComposeDir",
+   "name": "~/homelab/n8n",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:n8n_server",
+   "type": "Container",
+   "name": "n8n_server",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:monitoring",
+   "type": "Service",
+   "name": "Monitoring",
+   "source": "~/homelab/control/services.yaml#monitoring",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Grafana, Prometheus, logs",
+    "compose": "~/homelab/monitoring"
+   }
+  },
+  {
+   "id": "compose:~/homelab/monitoring",
+   "type": "ComposeDir",
+   "name": "~/homelab/monitoring",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-prometheus",
+   "type": "Container",
+   "name": "fortress-prometheus",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:notifier",
+   "type": "Service",
+   "name": "Alert notifier",
+   "source": "~/homelab/control/services.yaml#notifier",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Phone alerts from homelab",
+    "compose": "~/homelab/notifier"
+   }
+  },
+  {
+   "id": "compose:~/homelab/notifier",
+   "type": "ComposeDir",
+   "name": "~/homelab/notifier",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:notifier-notifier-1",
+   "type": "Container",
+   "name": "notifier-notifier-1",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:cine_immich",
+   "type": "Service",
+   "name": "Cine photos + AI tags",
+   "source": "~/homelab/control/services.yaml#cine_immich",
+   "props": {
+    "kind": "compose",
+    "gpu": true,
+    "default": true,
+    "blurb": "Photo library with B-roll AI (uses GPU when tagging)",
+    "compose": "~/homelab/cine-immich"
+   }
+  },
+  {
+   "id": "gpu:rtx5070ti",
+   "type": "GPU",
+   "name": "NVIDIA discrete GPU (example: 16 GB VRAM) 16 GB",
+   "source": "nvidia-smi",
+   "props": {}
+  },
+  {
+   "id": "compose:~/homelab/cine-immich",
+   "type": "ComposeDir",
+   "name": "~/homelab/cine-immich",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:cine_immich_server",
+   "type": "Container",
+   "name": "cine_immich_server",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:immich",
+   "type": "Service",
+   "name": "Immich photos",
+   "source": "~/homelab/control/services.yaml#immich",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Standard photo backup library",
+    "compose": "~/homelab/orchestration/stacks/immich"
+   }
+  },
+  {
+   "id": "compose:~/homelab/orchestration/stacks/immich",
+   "type": "ComposeDir",
+   "name": "~/homelab/orchestration/stacks/immich",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-immich-server",
+   "type": "Container",
+   "name": "fortress-immich-server",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:plane",
+   "type": "Service",
+   "name": "Plane projects",
+   "source": "~/homelab/control/services.yaml#plane",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Project management boards",
+    "compose": "~/homelab/orchestration/stacks/plane"
+   }
+  },
+  {
+   "id": "compose:~/homelab/orchestration/stacks/plane",
+   "type": "ComposeDir",
+   "name": "~/homelab/orchestration/stacks/plane",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:plane-proxy-1",
+   "type": "Container",
+   "name": "plane-proxy-1",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:affine",
+   "type": "Service",
+   "name": "Affine notes",
+   "source": "~/homelab/control/services.yaml#affine",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Notes and knowledge base",
+    "compose": "~/homelab/affine"
+   }
+  },
+  {
+   "id": "compose:~/homelab/affine",
+   "type": "ComposeDir",
+   "name": "~/homelab/affine",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:affine_server",
+   "type": "Container",
+   "name": "affine_server",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:anytype",
+   "type": "Service",
+   "name": "Anytype sync",
+   "source": "~/homelab/control/services.yaml#anytype",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Self-hosted Anytype sync server",
+    "compose": "~/homelab/anytype"
+   }
+  },
+  {
+   "id": "compose:~/homelab/anytype",
+   "type": "ComposeDir",
+   "name": "~/homelab/anytype",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:anytype_sync_bundle",
+   "type": "Container",
+   "name": "anytype_sync_bundle",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:jarvis",
+   "type": "Service",
+   "name": "Jarvis voice",
+   "source": "~/homelab/control/services.yaml#jarvis",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Voice assistant (needs Local AI)",
+    "compose": "~/homelab/jarvis"
+   }
+  },
+  {
+   "id": "compose:~/homelab/jarvis",
+   "type": "ComposeDir",
+   "name": "~/homelab/jarvis",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:jarvis-gateway",
+   "type": "Container",
+   "name": "jarvis-gateway",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:vault",
+   "type": "Service",
+   "name": "Vault storage (MinIO)",
+   "source": "~/homelab/control/services.yaml#vault",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Inbound backup storage \u2014 NOT off-site restic",
+    "compose": "~/homelab/vault-storage"
+   }
+  },
+  {
+   "id": "compose:~/homelab/vault-storage",
+   "type": "ComposeDir",
+   "name": "~/homelab/vault-storage",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:vault-minio",
+   "type": "Container",
+   "name": "vault-minio",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:mediastack",
+   "type": "Service",
+   "name": "Media (Jellyfin)",
+   "source": "~/homelab/control/services.yaml#mediastack",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": true,
+    "blurb": "Movies, TV, downloads (*arr stack)",
+    "compose": "~/mediastack"
+   }
+  },
+  {
+   "id": "compose:~/mediastack",
+   "type": "ComposeDir",
+   "name": "~/mediastack",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:mediastack-jellyfin",
+   "type": "Container",
+   "name": "mediastack-jellyfin",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:personal_feed",
+   "type": "Service",
+   "name": "Personal Feed",
+   "source": "~/homelab/control/services.yaml#personal_feed",
+   "props": {
+    "kind": "host",
+    "gpu": false,
+    "default": true,
+    "blurb": "Android feed app backend"
+   }
+  },
+  {
+   "id": "port:8077",
+   "type": "Port",
+   "name": "8077",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "script:~/homelab/personal-feed/start_backend.sh",
+   "type": "Script",
+   "name": "start_backend.sh",
+   "source": "~/homelab/control/services.yaml",
+   "props": {
+    "path": "~/homelab/personal-feed/start_backend.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "service:ai_llama",
+   "type": "Service",
+   "name": "Local AI (HauhauCS)",
+   "source": "~/homelab/control/services.yaml#ai_llama",
+   "props": {
+    "kind": "host",
+    "gpu": true,
+    "default": true,
+    "blurb": "Coding / long-chat brain on the GPU"
+   }
+  },
+  {
+   "id": "port:8081",
+   "type": "Port",
+   "name": "8081",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "script:~/bin/llama-server-ctl",
+   "type": "Script",
+   "name": "llama-server-ctl",
+   "source": "~/homelab/control/services.yaml",
+   "props": {
+    "path": "~/bin/llama-server-ctl",
+    "exists": true
+   }
+  },
+  {
+   "id": "service:modelq",
+   "type": "Service",
+   "name": "Model queue",
+   "source": "~/homelab/control/services.yaml#modelq",
+   "props": {
+    "kind": "host",
+    "gpu": false,
+    "default": true,
+    "blurb": "Priority queue proxy for the single local brain (:8181 \u2192 :8081)"
+   }
+  },
+  {
+   "id": "port:8181",
+   "type": "Port",
+   "name": "8181",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:agent_gateway",
+   "type": "Service",
+   "name": "Agent gateway",
+   "source": "~/homelab/control/services.yaml#agent_gateway",
+   "props": {
+    "kind": "host",
+    "gpu": false,
+    "default": true,
+    "blurb": "HTTP API for Homelab agents (Android / CLI)"
+   }
+  },
+  {
+   "id": "port:8190",
+   "type": "Port",
+   "name": "8190",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:oda_preview",
+   "type": "Service",
+   "name": "ODA preview server",
+   "source": "~/homelab/control/services.yaml#oda_preview",
+   "props": {
+    "kind": "host",
+    "gpu": false,
+    "default": true,
+    "blurb": "Static design previews for ODA (systemd system unit oda-preview.service)"
+   }
+  },
+  {
+   "id": "port:7460",
+   "type": "Port",
+   "name": "7460",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:vram_watchdog",
+   "type": "Service",
+   "name": "VRAM watchdog",
+   "source": "~/homelab/control/services.yaml#vram_watchdog",
+   "props": {
+    "kind": "host",
+    "gpu": false,
+    "default": true,
+    "blurb": "Pauses AI brain under VRAM pressure (Telegram alert), auto-resumes"
+   }
+  },
+  {
+   "id": "script:~/homelab/control/vram-watchdog.sh",
+   "type": "Script",
+   "name": "vram-watchdog.sh",
+   "source": "~/homelab/control/services.yaml",
+   "props": {
+    "path": "~/homelab/control/vram-watchdog.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "service:lifepath",
+   "type": "Service",
+   "name": "LifePath",
+   "source": "~/homelab/control/services.yaml#lifepath",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": false,
+    "blurb": "Life planner app",
+    "compose": "~/homelab/LifePath"
+   }
+  },
+  {
+   "id": "compose:~/homelab/LifePath",
+   "type": "ComposeDir",
+   "name": "~/homelab/LifePath",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "port:39081",
+   "type": "Port",
+   "name": "39081",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:vitalis",
+   "type": "Service",
+   "name": "Vitalis",
+   "source": "~/homelab/control/services.yaml#vitalis",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": false,
+    "blurb": "Health / concierge platform",
+    "compose": "~/homelab/vitalis"
+   }
+  },
+  {
+   "id": "compose:~/homelab/vitalis",
+   "type": "ComposeDir",
+   "name": "~/homelab/vitalis",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "port:39082",
+   "type": "Port",
+   "name": "39082",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:music",
+   "type": "Service",
+   "name": "Music service",
+   "source": "~/homelab/control/services.yaml#music",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": false,
+    "blurb": "Spotify downloader + music streaming",
+    "compose": "~/homelab/orchestration/stacks/music-service"
+   }
+  },
+  {
+   "id": "compose:~/homelab/orchestration/stacks/music-service",
+   "type": "ComposeDir",
+   "name": "~/homelab/orchestration/stacks/music-service",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "port:6544",
+   "type": "Port",
+   "name": "6544",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:virtual_self",
+   "type": "Service",
+   "name": "Virtual Self",
+   "source": "~/homelab/control/services.yaml#virtual_self",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": false,
+    "blurb": "Personal memory + CLI chat (Docker, corpus read-only); archive profile for Takeout sync",
+    "compose": "~/homelab/virtual-self-memory"
+   }
+  },
+  {
+   "id": "compose:~/homelab/virtual-self-memory",
+   "type": "ComposeDir",
+   "name": "~/homelab/virtual-self-memory",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "container:virtual_self_api",
+   "type": "Container",
+   "name": "virtual_self_api",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "service:virtual_self_archive",
+   "type": "Service",
+   "name": "Virtual Self Archive",
+   "source": "~/homelab/control/services.yaml#virtual_self_archive",
+   "props": {
+    "kind": "compose",
+    "gpu": false,
+    "default": false,
+    "blurb": "Takeout sync (rclone) + archive worker \u2014 compose profile archive",
+    "compose": "~/homelab/virtual-self-memory"
+   }
+  },
+  {
+   "id": "container:virtual_self_archive_sync",
+   "type": "Container",
+   "name": "virtual_self_archive_sync",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "brain:hauhaucs_q4",
+   "type": "Brain",
+   "name": "Best for coding and long chats (recommended)",
+   "source": "~/homelab/control/ai_models.yaml#hauhaucs_q4",
+   "props": {
+    "backend": "llama",
+    "quant": "default quant",
+    "port": 8081,
+    "model_path": "~/models/hauhaucs/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-default quant.gguf",
+    "tip": "Sharp answers, huge memory window. TurboQuant yes. ~8\u20139 GB GPU."
+   }
+  },
+  {
+   "id": "model:Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-default quant.gguf",
+   "type": "Model",
+   "name": "Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-default quant.gguf",
+   "source": "~/homelab/control/ai_models.yaml",
+   "props": {
+    "path": "~/models/hauhaucs/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-default quant.gguf"
+   }
+  },
+  {
+   "id": "brain:hauhaucs_iq3",
+   "type": "Brain",
+   "name": "Smaller / faster same family",
+   "source": "~/homelab/control/ai_models.yaml#hauhaucs_iq3",
+   "props": {
+    "backend": "llama",
+    "quant": "IQ3_M",
+    "port": 8081,
+    "model_path": "~/models/hauhaucs/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-IQ3_M.gguf",
+    "tip": "Same model, more compressed. Slightly less sharp. TurboQuant yes. Less disk/RAM."
+   }
+  },
+  {
+   "id": "model:Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-IQ3_M.gguf",
+   "type": "Model",
+   "name": "Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-IQ3_M.gguf",
+   "source": "~/homelab/control/ai_models.yaml",
+   "props": {
+    "path": "~/models/hauhaucs/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-IQ3_M.gguf"
+   }
+  },
+  {
+   "id": "brain:ollama_smart",
+   "type": "Brain",
+   "name": "Smartest Ollama chat",
+   "source": "~/homelab/control/ai_models.yaml#ollama_smart",
+   "props": {
+    "backend": "ollama",
+    "quant": "default quant",
+    "ollama_model": "qwen3.6:27b",
+    "tip": "Dense 27B \u2014 best reasoning in Ollama. Cold storage \u2014 run `ollama-cold thaw qwen3.6:27b` first (no re-download). No TurboQuant. Conflicts with Local AI on GPU."
+   }
+  },
+  {
+   "id": "model:ollama:qwen3.6:27b",
+   "type": "Model",
+   "name": "qwen3.6:27b",
+   "source": "~/homelab/control/ai_models.yaml",
+   "props": {}
+  },
+  {
+   "id": "brain:ollama_fast",
+   "type": "Brain",
+   "name": "Faster Ollama chat",
+   "source": "~/homelab/control/ai_models.yaml#ollama_fast",
+   "props": {
+    "backend": "ollama",
+    "quant": "default quant",
+    "ollama_model": "qwen3.6:35b-a3b",
+    "tip": "MoE 35B (~3B active) \u2014 quicker replies. Cold storage \u2014 run `ollama-cold thaw qwen3.6:35b-a3b` first (no re-download). No TurboQuant."
+   }
+  },
+  {
+   "id": "model:ollama:qwen3.6:35b-a3b",
+   "type": "Model",
+   "name": "qwen3.6:35b-a3b",
+   "source": "~/homelab/control/ai_models.yaml",
+   "props": {}
+  },
+  {
+   "id": "brain:none",
+   "type": "Brain",
+   "name": "None \u2014 free the GPU",
+   "source": "~/homelab/control/ai_models.yaml#none",
+   "props": {
+    "backend": "none",
+    "quant": "none",
+    "tip": "Stops Local AI and unloads Ollama from VRAM (for video / heavy photo AI)."
+   }
+  },
+  {
+   "id": "job:vault_offsite",
+   "type": "HostJob",
+   "name": "Off-site backup (restic \u2192 GDrive)",
+   "source": "~/homelab/control/host_jobs.yaml#vault_offsite",
+   "props": {
+    "blurb": "Encrypted incremental backups to Google Drive",
+    "checks": {
+     "cron_marker": "vault-backup run",
+     "restic_min_snapshots": 1,
+     "restic_max_age_sec": 129600,
+     "log_dir": "/mnt/backup-volume/vault-backup/logs",
+     "log_glob": "restic-*.log",
+     "log_fatal_pattern": "Fatal:"
+    }
+   }
+  },
+  {
+   "id": "job:vault_backup_exporter",
+   "type": "HostJob",
+   "name": "Vault backup exporter (monitoring)",
+   "source": "~/homelab/control/host_jobs.yaml#vault_backup_exporter",
+   "props": {
+    "blurb": "Prometheus exporter for restic/GDrive backup health",
+    "checks": {
+     "container_running": "fortress-vault-backup-exporter"
+    }
+   }
+  },
+  {
+   "id": "service:ollama",
+   "type": "SystemdUnit",
+   "name": "ollama.service (:11434)",
+   "source": "/etc/systemd/system/ollama.service",
+   "props": {}
+  },
+  {
+   "id": "port:11434",
+   "type": "Port",
+   "name": "11434 Ollama (0.0.0.0)",
+   "source": "ollama override.conf",
+   "props": {}
+  },
+  {
+   "id": "port:8001",
+   "type": "Port",
+   "name": "8001 Alert notifier",
+   "source": "notifier/docker-compose.yml",
+   "props": {}
+  },
+  {
+   "id": "state:ai-paused",
+   "type": "StateFile",
+   "name": "~/.local/state/fortress-vram-watchdog/ai-paused",
+   "source": "~/homelab/control/vram-watchdog.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/personal-feed/start_backend.sh",
+   "type": "File",
+   "name": "start_backend.sh",
+   "source": "~/homelab/personal-feed/start_backend.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/ODA/lib/oda/core.py",
+   "type": "File",
+   "name": "core.py",
+   "source": "~/homelab/ODA/lib/oda/core.py",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/virtual-self-memory/scripts/make-chat-ready.sh",
+   "type": "File",
+   "name": "make-chat-ready.sh",
+   "source": "~/homelab/virtual-self-memory/scripts/make-chat-ready.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/virtual-self-memory/scripts/overnight-run.sh",
+   "type": "File",
+   "name": "overnight-run.sh",
+   "source": "~/homelab/virtual-self-memory/scripts/overnight-run.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/research-digest/install.sh",
+   "type": "File",
+   "name": "install.sh",
+   "source": "~/homelab/research-digest/install.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/control/services.yaml",
+   "type": "File",
+   "name": "services.yaml",
+   "source": "~/homelab/control/services.yaml",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/control/lib/actions.sh",
+   "type": "File",
+   "name": "actions.sh",
+   "source": "~/homelab/control/lib/actions.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/control/lib/gpu.sh",
+   "type": "File",
+   "name": "gpu.sh",
+   "source": "~/homelab/control/lib/gpu.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/homelab/control/vram-watchdog.sh",
+   "type": "File",
+   "name": "vram-watchdog.sh",
+   "source": "~/homelab/control/vram-watchdog.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/bin/hauhaucs-install-validate.sh",
+   "type": "File",
+   "name": "hauhaucs-install-validate.sh",
+   "source": "~/bin/hauhaucs-install-validate.sh",
+   "props": {}
+  },
+  {
+   "id": "file:~/bin/hauhaucs-download-q4km.sh",
+   "type": "File",
+   "name": "hauhaucs-download-q4km.sh",
+   "source": "~/bin/hauhaucs-download-q4km.sh",
+   "props": {}
+  },
+  {
+   "id": "cron:0 6 * * *:af95d9",
+   "type": "CronJob",
+   "name": "0 6 * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "0 6 * * * cd ~/homelab/personal-feed && /bin/bash run_daily.sh >> out/cron.log 2>&1"
+   }
+  },
+  {
+   "id": "log:out/cron.log",
+   "type": "Log",
+   "name": "out/cron.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:@reboot:a9ceb9",
+   "type": "CronJob",
+   "name": "@reboot",
+   "source": "crontab -l",
+   "props": {
+    "line": "@reboot sleep 20 && ~/homelab/control/fortress boot >> ~/homelab/control/boot.log 2>&1"
+   }
+  },
+  {
+   "id": "script:~/homelab/control/fortress",
+   "type": "Script",
+   "name": "fortress",
+   "source": "crontab -l",
+   "props": {
+    "path": "~/homelab/control/fortress",
+    "exists": true
+   }
+  },
+  {
+   "id": "log:~/homelab/control/boot.log",
+   "type": "Log",
+   "name": "~/homelab/control/boot.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:0 5 * * *:271f54",
+   "type": "CronJob",
+   "name": "0 5 * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "0 5 * * * cd ~/homelab/personal-feed && /bin/bash run_learn.sh >> out/learn.log 2>&1"
+   }
+  },
+  {
+   "id": "log:out/learn.log",
+   "type": "Log",
+   "name": "out/learn.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:*/15 * * * *:b6e2aa",
+   "type": "CronJob",
+   "name": "*/15 * * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "*/15 * * * * cd ~/kindle-dash && . ./.env && HABITS_FILE=~/kindle-dash/habits.json NEWS_FILE=~/kindle-dash/news.txt python3 render_dash.py >> ~/kindle-dash/render.log 2>&1 # kindle-dash-render"
+   }
+  },
+  {
+   "id": "log:~/kindle-dash/render.log",
+   "type": "Log",
+   "name": "~/kindle-dash/render.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:*/10 * * * *:22bd6e",
+   "type": "CronJob",
+   "name": "*/10 * * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "*/10 * * * * ~/bin/wifi-safe-switch.sh guard >> ~/wifi-scan-reports/wifi-guard-cron.log 2>&1 # wifi-mesh-vpn-guard"
+   }
+  },
+  {
+   "id": "script:~/bin/wifi-safe-switch.sh",
+   "type": "Script",
+   "name": "wifi-safe-switch.sh",
+   "source": "crontab -l",
+   "props": {
+    "path": "~/bin/wifi-safe-switch.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "log:~/wifi-scan-reports/wifi-guard-cron.log",
+   "type": "Log",
+   "name": "~/wifi-scan-reports/wifi-guard-cron.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:0 * * * *:8d85f5",
+   "type": "CronJob",
+   "name": "0 * * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "0 * * * * ~/homelab/control/fortress health --notify >> ~/.local/state/homelab/health-cron.log 2>&1 # fortress-health"
+   }
+  },
+  {
+   "id": "log:~/.local/state/homelab/health-cron.log",
+   "type": "Log",
+   "name": "~/.local/state/homelab/health-cron.log",
+   "source": "crontab -l",
+   "props": {}
+  },
+  {
+   "id": "cron:0 3 * * *:363e17",
+   "type": "CronJob",
+   "name": "0 3 * * *",
+   "source": "crontab -l",
+   "props": {
+    "line": "0 3 * * * ~/homelab/vault-backup/scripts/cron-daily.sh # vault-backup run daily"
+   }
+  },
+  {
+   "id": "script:~/homelab/vault-backup/scripts/cron-daily.sh",
+   "type": "Script",
+   "name": "cron-daily.sh",
+   "source": "crontab -l",
+   "props": {
+    "path": "~/homelab/vault-backup/scripts/cron-daily.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "cron:0 4 * * 0:68b903",
+   "type": "CronJob",
+   "name": "0 4 * * 0",
+   "source": "crontab -l",
+   "props": {
+    "line": "0 4 * * 0 ~/homelab/vault-backup/scripts/cron-photos.sh # vault-backup run photos"
+   }
+  },
+  {
+   "id": "script:~/homelab/vault-backup/scripts/cron-photos.sh",
+   "type": "Script",
+   "name": "cron-photos.sh",
+   "source": "crontab -l",
+   "props": {
+    "path": "~/homelab/vault-backup/scripts/cron-photos.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "cron:@reboot:0a9bdf",
+   "type": "CronJob",
+   "name": "@reboot",
+   "source": "crontab -l",
+   "props": {
+    "line": "@reboot sleep 120 && ~/homelab/vault-backup/scripts/bootstrap-keepalive.sh # vault-bootstrap-resume"
+   }
+  },
+  {
+   "id": "script:~/homelab/vault-backup/scripts/bootstrap-keepalive.sh",
+   "type": "Script",
+   "name": "bootstrap-keepalive.sh",
+   "source": "crontab -l",
+   "props": {
+    "path": "~/homelab/vault-backup/scripts/bootstrap-keepalive.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:ls",
+   "type": "Alias",
+   "name": "ls",
+   "source": "~/.bashrc:78",
+   "props": {}
+  },
+  {
+   "id": "alias:grep",
+   "type": "Alias",
+   "name": "grep",
+   "source": "~/.bashrc:82",
+   "props": {}
+  },
+  {
+   "id": "alias:fgrep",
+   "type": "Alias",
+   "name": "fgrep",
+   "source": "~/.bashrc:83",
+   "props": {}
+  },
+  {
+   "id": "alias:egrep",
+   "type": "Alias",
+   "name": "egrep",
+   "source": "~/.bashrc:84",
+   "props": {}
+  },
+  {
+   "id": "alias:ll",
+   "type": "Alias",
+   "name": "ll",
+   "source": "~/.bashrc:91",
+   "props": {
+    "comment": "Long list: all files, sizes, type markers"
+   }
+  },
+  {
+   "id": "alias:la",
+   "type": "Alias",
+   "name": "la",
+   "source": "~/.bashrc:92",
+   "props": {
+    "comment": "List all except . and .."
+   }
+  },
+  {
+   "id": "alias:l",
+   "type": "Alias",
+   "name": "l",
+   "source": "~/.bashrc:93",
+   "props": {
+    "comment": "Compact columns with file-type suffixes"
+   }
+  },
+  {
+   "id": "alias:alert",
+   "type": "Alias",
+   "name": "alert",
+   "source": "~/.bashrc:96",
+   "props": {}
+  },
+  {
+   "id": "alias:sysmon",
+   "type": "Alias",
+   "name": "sysmon",
+   "source": "~/.bashrc:127",
+   "props": {
+    "comment": "Jump to system-monitor project"
+   }
+  },
+  {
+   "id": "alias:sys-check",
+   "type": "Alias",
+   "name": "sys-check",
+   "source": "~/.bashrc:128",
+   "props": {
+    "comment": "Live health dashboard"
+   }
+  },
+  {
+   "id": "script:~/homelab/system-monitor/display_stats.py",
+   "type": "Script",
+   "name": "display_stats.py",
+   "source": "~/.bashrc:128",
+   "props": {
+    "path": "~/homelab/system-monitor/display_stats.py",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:checkgpu",
+   "type": "Alias",
+   "name": "checkgpu",
+   "source": "~/.bashrc:129",
+   "props": {
+    "comment": "Which processes use the NVIDIA GPU"
+   }
+  },
+  {
+   "id": "script:~/homelab/system-monitor/check_gpu_usage.sh",
+   "type": "Script",
+   "name": "check_gpu_usage.sh",
+   "source": "~/.bashrc:129",
+   "props": {
+    "path": "~/homelab/system-monitor/check_gpu_usage.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:ollama-offload",
+   "type": "Alias",
+   "name": "ollama-offload",
+   "source": "~/.bashrc:130",
+   "props": {
+    "comment": "Unload all Ollama models from VRAM"
+   }
+  },
+  {
+   "id": "alias:cine",
+   "type": "Alias",
+   "name": "cine",
+   "source": "~/.bashrc:136",
+   "props": {
+    "comment": "Jump to stack directory"
+   }
+  },
+  {
+   "id": "alias:cineImport",
+   "type": "Alias",
+   "name": "cineImport",
+   "source": "~/.bashrc:137",
+   "props": {
+    "comment": "Menu: mount SSD \u2192 import \u2192 unmount"
+   }
+  },
+  {
+   "id": "script:~/homelab/cine-immich/scripts/cine_import_menu.sh",
+   "type": "Script",
+   "name": "cine_import_menu.sh",
+   "source": "~/.bashrc:137",
+   "props": {
+    "path": "~/homelab/cine-immich/scripts/cine_import_menu.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:mount_immich_ssd",
+   "type": "Alias",
+   "name": "mount_immich_ssd",
+   "source": "~/.bashrc:138",
+   "props": {
+    "comment": "Mount external SSD for cine import"
+   }
+  },
+  {
+   "id": "alias:cinelogs",
+   "type": "Alias",
+   "name": "cinelogs",
+   "source": "~/.bashrc:140",
+   "props": {
+    "comment": "Immich worker logs"
+   }
+  },
+  {
+   "id": "alias:cinelogsml",
+   "type": "Alias",
+   "name": "cinelogsml",
+   "source": "~/.bashrc:141",
+   "props": {
+    "comment": "CLIP/face ML logs"
+   }
+  },
+  {
+   "id": "alias:cinelogsworker",
+   "type": "Alias",
+   "name": "cinelogsworker",
+   "source": "~/.bashrc:142",
+   "props": {
+    "comment": "B-roll tagging worker logs"
+   }
+  },
+  {
+   "id": "alias:cinestats",
+   "type": "Alias",
+   "name": "cinestats",
+   "source": "~/.bashrc:143",
+   "props": {
+    "comment": "Live container RAM/CPU"
+   }
+  },
+  {
+   "id": "alias:cinegpu",
+   "type": "Alias",
+   "name": "cinegpu",
+   "source": "~/.bashrc:144",
+   "props": {
+    "comment": "Live GPU usage (Ctrl+C to exit)"
+   }
+  },
+  {
+   "id": "alias:cinehealth",
+   "type": "Alias",
+   "name": "cinehealth",
+   "source": "~/.bashrc:145",
+   "props": {
+    "comment": "Cine container health"
+   }
+  },
+  {
+   "id": "alias:triggerReindex",
+   "type": "Alias",
+   "name": "triggerReindex",
+   "source": "~/.bashrc:147",
+   "props": {
+    "comment": "Start full library reindex"
+   }
+  },
+  {
+   "id": "alias:checkReindexStatus",
+   "type": "Alias",
+   "name": "checkReindexStatus",
+   "source": "~/.bashrc:148",
+   "props": {
+    "comment": "Reindex progress only"
+   }
+  },
+  {
+   "id": "alias:migrateCine",
+   "type": "Alias",
+   "name": "migrateCine",
+   "source": "~/.bashrc:149",
+   "props": {
+    "comment": "Migrate media from source drive"
+   }
+  },
+  {
+   "id": "script:~/homelab/cine-immich/scripts/migrate_from_source.sh",
+   "type": "Script",
+   "name": "migrate_from_source.sh",
+   "source": "~/.bashrc:149",
+   "props": {
+    "path": "~/homelab/cine-immich/scripts/migrate_from_source.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:migrateCineDry",
+   "type": "Alias",
+   "name": "migrateCineDry",
+   "source": "~/.bashrc:150",
+   "props": {
+    "comment": "Preview migration, no writes"
+   }
+  },
+  {
+   "id": "alias:rediscli",
+   "type": "Alias",
+   "name": "rediscli",
+   "source": "~/.bashrc:152",
+   "props": {
+    "comment": "Interactive Redis (cine queues)"
+   }
+  },
+  {
+   "id": "alias:clearRedisQueues",
+   "type": "Alias",
+   "name": "clearRedisQueues",
+   "source": "~/.bashrc:153",
+   "props": {
+    "comment": "Clear stuck B-roll queues"
+   }
+  },
+  {
+   "id": "alias:checkBrollQueue",
+   "type": "Alias",
+   "name": "checkBrollQueue",
+   "source": "~/.bashrc:154",
+   "props": {
+    "comment": "Pending B-roll jobs"
+   }
+  },
+  {
+   "id": "alias:checkFaceQueue",
+   "type": "Alias",
+   "name": "checkFaceQueue",
+   "source": "~/.bashrc:155",
+   "props": {
+    "comment": "Pending face jobs"
+   }
+  },
+  {
+   "id": "alias:startCine",
+   "type": "Alias",
+   "name": "startCine",
+   "source": "~/.bashrc:157",
+   "props": {
+    "comment": "Start entire cine stack"
+   }
+  },
+  {
+   "id": "alias:stopCine",
+   "type": "Alias",
+   "name": "stopCine",
+   "source": "~/.bashrc:158",
+   "props": {
+    "comment": "Stop entire cine stack"
+   }
+  },
+  {
+   "id": "alias:restartCine",
+   "type": "Alias",
+   "name": "restartCine",
+   "source": "~/.bashrc:159",
+   "props": {
+    "comment": "Restart without rebuild"
+   }
+  },
+  {
+   "id": "alias:restartCineAll",
+   "type": "Alias",
+   "name": "restartCineAll",
+   "source": "~/.bashrc:160",
+   "props": {
+    "comment": "Recreate all containers"
+   }
+  },
+  {
+   "id": "alias:n8n-on",
+   "type": "Alias",
+   "name": "n8n-on",
+   "source": "~/.bashrc:165",
+   "props": {
+    "comment": "Start n8n + Postgres (scheduled cron may also start it)"
+   }
+  },
+  {
+   "id": "script:~/homelab/n8n/n8n_scheduler.sh",
+   "type": "Script",
+   "name": "n8n_scheduler.sh",
+   "source": "~/.bashrc:165",
+   "props": {
+    "path": "~/homelab/n8n/n8n_scheduler.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:n8n-off",
+   "type": "Alias",
+   "name": "n8n-off",
+   "source": "~/.bashrc:166",
+   "props": {
+    "comment": "Stop n8n stack"
+   }
+  },
+  {
+   "id": "alias:nfa",
+   "type": "Alias",
+   "name": "nfa",
+   "source": "~/.bashrc:167",
+   "props": {
+    "comment": "NFA queue CLI (finance analyst workflows)"
+   }
+  },
+  {
+   "id": "script:~/homelab/core-orchestration/fortress_cli.cjs",
+   "type": "Script",
+   "name": "fortress_cli.cjs",
+   "source": "~/.bashrc:167",
+   "props": {
+    "path": "~/homelab/core-orchestration/fortress_cli.cjs",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:affine-on",
+   "type": "Alias",
+   "name": "affine-on",
+   "source": "~/.bashrc:172",
+   "props": {
+    "comment": "Start AFFiNE stack"
+   }
+  },
+  {
+   "id": "alias:affine-off",
+   "type": "Alias",
+   "name": "affine-off",
+   "source": "~/.bashrc:173",
+   "props": {
+    "comment": "Stop AFFiNE (keeps data volumes)"
+   }
+  },
+  {
+   "id": "alias:lifepath",
+   "type": "Alias",
+   "name": "lifepath",
+   "source": "~/.bashrc:179",
+   "props": {
+    "comment": "Jump to project"
+   }
+  },
+  {
+   "id": "alias:lifepath-up",
+   "type": "Alias",
+   "name": "lifepath-up",
+   "source": "~/.bashrc:180",
+   "props": {
+    "comment": "Start Docker stack"
+   }
+  },
+  {
+   "id": "alias:lifepath-down",
+   "type": "Alias",
+   "name": "lifepath-down",
+   "source": "~/.bashrc:181",
+   "props": {
+    "comment": "Stop Docker stack"
+   }
+  },
+  {
+   "id": "alias:lifepath-logs",
+   "type": "Alias",
+   "name": "lifepath-logs",
+   "source": "~/.bashrc:182",
+   "props": {
+    "comment": "Follow all service logs"
+   }
+  },
+  {
+   "id": "alias:lifepath-rebuild",
+   "type": "Alias",
+   "name": "lifepath-rebuild",
+   "source": "~/.bashrc:183",
+   "props": {
+    "comment": "Full image rebuild"
+   }
+  },
+  {
+   "id": "alias:lifepath-be",
+   "type": "Alias",
+   "name": "lifepath-be",
+   "source": "~/.bashrc:184",
+   "props": {
+    "comment": "Dev: Spring API on :39081"
+   }
+  },
+  {
+   "id": "alias:lifepath-fe",
+   "type": "Alias",
+   "name": "lifepath-fe",
+   "source": "~/.bashrc:185",
+   "props": {
+    "comment": "Dev: Vite frontend on :39173"
+   }
+  },
+  {
+   "id": "function:powersaver",
+   "type": "Function",
+   "name": "powersaver",
+   "source": "~/.bashrc:197",
+   "props": {}
+  },
+  {
+   "id": "function:performance",
+   "type": "Function",
+   "name": "performance",
+   "source": "~/.bashrc:269",
+   "props": {}
+  },
+  {
+   "id": "function:powersaver-force",
+   "type": "Function",
+   "name": "powersaver-force",
+   "source": "~/.bashrc:323",
+   "props": {}
+  },
+  {
+   "id": "function:powersaver-lite",
+   "type": "Function",
+   "name": "powersaver-lite",
+   "source": "~/.bashrc:360",
+   "props": {}
+  },
+  {
+   "id": "function:powerstatus",
+   "type": "Function",
+   "name": "powerstatus",
+   "source": "~/.bashrc:399",
+   "props": {}
+  },
+  {
+   "id": "alias:share-media",
+   "type": "Alias",
+   "name": "share-media",
+   "source": "~/.bashrc:456",
+   "props": {
+    "comment": "Same as expose \u2014 prompts for local URL"
+   }
+  },
+  {
+   "id": "script:~/.local/bin/proxy-share.sh",
+   "type": "Script",
+   "name": "proxy-share.sh",
+   "source": "~/.bashrc:456",
+   "props": {
+    "path": "~/.local/bin/proxy-share.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:expose",
+   "type": "Alias",
+   "name": "expose",
+   "source": "~/.bashrc:457",
+   "props": {
+    "comment": "Start cloudflared tunnel to a local service"
+   }
+  },
+  {
+   "id": "alias:share-stop-all",
+   "type": "Alias",
+   "name": "share-stop-all",
+   "source": "~/.bashrc:458",
+   "props": {
+    "comment": "Kill all active cloudflared tunnels"
+   }
+  },
+  {
+   "id": "alias:vself",
+   "type": "Alias",
+   "name": "vself",
+   "source": "~/.bashrc:464",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-up",
+   "type": "Alias",
+   "name": "vself-up",
+   "source": "~/.bashrc:465",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-down",
+   "type": "Alias",
+   "name": "vself-down",
+   "source": "~/.bashrc:466",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-logs",
+   "type": "Alias",
+   "name": "vself-logs",
+   "source": "~/.bashrc:467",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-chat",
+   "type": "Alias",
+   "name": "vself-chat",
+   "source": "~/.bashrc:468",
+   "props": {}
+  },
+  {
+   "id": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "type": "Script",
+   "name": "fortress-cli.sh",
+   "source": "~/.bashrc:468",
+   "props": {
+    "path": "~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:vself-talk",
+   "type": "Alias",
+   "name": "vself-talk",
+   "source": "~/.bashrc:470",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-bake",
+   "type": "Alias",
+   "name": "vself-bake",
+   "source": "~/.bashrc:471",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-status",
+   "type": "Alias",
+   "name": "vself-status",
+   "source": "~/.bashrc:472",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-archive-sync",
+   "type": "Alias",
+   "name": "vself-archive-sync",
+   "source": "~/.bashrc:473",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-archive-run",
+   "type": "Alias",
+   "name": "vself-archive-run",
+   "source": "~/.bashrc:474",
+   "props": {}
+  },
+  {
+   "id": "alias:vself-archive-status",
+   "type": "Alias",
+   "name": "vself-archive-status",
+   "source": "~/.bashrc:475",
+   "props": {}
+  },
+  {
+   "id": "alias:virtual-self",
+   "type": "Alias",
+   "name": "virtual-self",
+   "source": "~/.bashrc:476",
+   "props": {}
+  },
+  {
+   "id": "alias:fortress-vitals",
+   "type": "Alias",
+   "name": "fortress-vitals",
+   "source": "~/.bashrc:481",
+   "props": {
+    "comment": "Open live fortress status in tmux"
+   }
+  },
+  {
+   "id": "script:~/bin/fortress-vitals",
+   "type": "Script",
+   "name": "fortress-vitals",
+   "source": "~/.bashrc:481",
+   "props": {
+    "path": "~/bin/fortress-vitals",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:vault-backup",
+   "type": "Alias",
+   "name": "vault-backup",
+   "source": "~/.bashrc:488",
+   "props": {
+    "comment": "Interactive menu (incremental restic backups)"
+   }
+  },
+  {
+   "id": "alias:vault-backup-menu",
+   "type": "Alias",
+   "name": "vault-backup-menu",
+   "source": "~/.bashrc:489",
+   "props": {
+    "comment": "Same as vault-backup"
+   }
+  },
+  {
+   "id": "alias:vault-backup-status",
+   "type": "Alias",
+   "name": "vault-backup-status",
+   "source": "~/.bashrc:490",
+   "props": {
+    "comment": "Setup check + restic snapshot summary"
+   }
+  },
+  {
+   "id": "alias:vault-backup-daily",
+   "type": "Alias",
+   "name": "vault-backup-daily",
+   "source": "~/.bashrc:491",
+   "props": {
+    "comment": "Incremental: configs/DBs/volumes, no photos"
+   }
+  },
+  {
+   "id": "alias:vault-backup-photos",
+   "type": "Alias",
+   "name": "vault-backup-photos",
+   "source": "~/.bashrc:492",
+   "props": {
+    "comment": "Incremental: /mnt/photos (only new/changed)"
+   }
+  },
+  {
+   "id": "alias:vault-backup-full",
+   "type": "Alias",
+   "name": "vault-backup-full",
+   "source": "~/.bashrc:493",
+   "props": {
+    "comment": "Incremental: all Tier-1 including photos"
+   }
+  },
+  {
+   "id": "alias:pih",
+   "type": "Alias",
+   "name": "pih",
+   "source": "~/.bashrc:513",
+   "props": {}
+  },
+  {
+   "id": "alias:llama-hauhaucs",
+   "type": "Alias",
+   "name": "llama-hauhaucs",
+   "source": "~/.bashrc:514",
+   "props": {}
+  },
+  {
+   "id": "function:pi",
+   "type": "Function",
+   "name": "pi",
+   "source": "~/.bashrc:516",
+   "props": {}
+  },
+  {
+   "id": "alias:plaintop",
+   "type": "Alias",
+   "name": "plaintop",
+   "source": "~/.bashrc:529",
+   "props": {}
+  },
+  {
+   "id": "script:~/homelab/system-monitor/plaintop.py",
+   "type": "Script",
+   "name": "plaintop.py",
+   "source": "~/.bashrc:529",
+   "props": {
+    "path": "~/homelab/system-monitor/plaintop.py",
+    "exists": true
+   }
+  },
+  {
+   "id": "alias:rdigest",
+   "type": "Alias",
+   "name": "rdigest",
+   "source": "~/.bashrc:532",
+   "props": {}
+  },
+  {
+   "id": "script:~/homelab/research-digest/research-digest-cli.sh",
+   "type": "Script",
+   "name": "research-digest-cli.sh",
+   "source": "~/.bashrc:532",
+   "props": {
+    "path": "~/homelab/research-digest/research-digest-cli.sh",
+    "exists": true
+   }
+  },
+  {
+   "id": "function:micdelay",
+   "type": "Function",
+   "name": "micdelay",
+   "source": "~/.bashrc:536",
+   "props": {}
+  },
+  {
+   "id": "function:micrange",
+   "type": "Function",
+   "name": "micrange",
+   "source": "~/.bashrc:537",
+   "props": {}
+  },
+  {
+   "id": "function:micptt",
+   "type": "Function",
+   "name": "micptt",
+   "source": "~/.bashrc:538",
+   "props": {}
+  },
+  {
+   "id": "alias:fortress",
+   "type": "Alias",
+   "name": "fortress",
+   "source": "~/.bashrc:541",
+   "props": {}
+  },
+  {
+   "id": "alias:f",
+   "type": "Alias",
+   "name": "f",
+   "source": "~/.bashrc:542",
+   "props": {}
+  },
+  {
+   "id": "function:pi-cyber",
+   "type": "Function",
+   "name": "pi-cyber",
+   "source": "~/.bashrc:563",
+   "props": {}
+  },
+  {
+   "id": "function:pi-case",
+   "type": "Function",
+   "name": "pi-case",
+   "source": "~/.bashrc:574",
+   "props": {}
+  },
+  {
+   "id": "container:virtual_self_worker",
+   "type": "Container",
+   "name": "virtual_self_worker",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:virtual-self",
+   "type": "ComposeProject",
+   "name": "virtual-self",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/virtual-self-memory"
+   }
+  },
+  {
+   "id": "project:notifier",
+   "type": "ComposeProject",
+   "name": "notifier",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/notifier"
+   }
+  },
+  {
+   "id": "container:virtual_self_searxng",
+   "type": "Container",
+   "name": "virtual_self_searxng",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:virtual_self_knowledge_gateway",
+   "type": "Container",
+   "name": "virtual_self_knowledge_gateway",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:virtual_self_postgres",
+   "type": "Container",
+   "name": "virtual_self_postgres",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:immich",
+   "type": "ComposeProject",
+   "name": "immich",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/orchestration/stacks/immich"
+   }
+  },
+  {
+   "id": "project:affine",
+   "type": "ComposeProject",
+   "name": "affine",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/affine"
+   }
+  },
+  {
+   "id": "container:affine_migration_job",
+   "type": "Container",
+   "name": "affine_migration_job",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-immich-ml",
+   "type": "Container",
+   "name": "fortress-immich-ml",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-immich-postgres",
+   "type": "Container",
+   "name": "fortress-immich-postgres",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-immich-redis",
+   "type": "Container",
+   "name": "fortress-immich-redis",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-meilisearch-play",
+   "type": "Container",
+   "name": "fortress-meilisearch-play",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:meilisearch-play",
+   "type": "ComposeProject",
+   "name": "meilisearch-play",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/meilisearch-play"
+   }
+  },
+  {
+   "id": "container:voicebox",
+   "type": "Container",
+   "name": "voicebox",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:voicebox",
+   "type": "ComposeProject",
+   "name": "voicebox",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/vox/voicebox"
+   }
+  },
+  {
+   "id": "container:cine_immich_gateway",
+   "type": "Container",
+   "name": "cine_immich_gateway",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:cine-immich",
+   "type": "ComposeProject",
+   "name": "cine-immich",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/cine-immich"
+   }
+  },
+  {
+   "id": "container:cine_search_proxy",
+   "type": "Container",
+   "name": "cine_search_proxy",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_broll_worker",
+   "type": "Container",
+   "name": "cine_broll_worker",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_broll_watcher",
+   "type": "Container",
+   "name": "cine_broll_watcher",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_immich_microservices",
+   "type": "Container",
+   "name": "cine_immich_microservices",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:jarvis",
+   "type": "ComposeProject",
+   "name": "jarvis",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/jarvis"
+   }
+  },
+  {
+   "id": "container:jarvis-tts",
+   "type": "Container",
+   "name": "jarvis-tts",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:jarvis-whisper",
+   "type": "Container",
+   "name": "jarvis-whisper",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine-immich-broll_face_worker-1",
+   "type": "Container",
+   "name": "cine-immich-broll_face_worker-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_immich_redis",
+   "type": "Container",
+   "name": "cine_immich_redis",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_immich_machine_learning",
+   "type": "Container",
+   "name": "cine_immich_machine_learning",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:cine_immich_postgres",
+   "type": "Container",
+   "name": "cine_immich_postgres",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:anytype",
+   "type": "ComposeProject",
+   "name": "anytype",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/anytype"
+   }
+  },
+  {
+   "id": "container:fortress-vault-backup-exporter",
+   "type": "Container",
+   "name": "fortress-vault-backup-exporter",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:monitoring",
+   "type": "ComposeProject",
+   "name": "monitoring",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/monitoring"
+   }
+  },
+  {
+   "id": "container:fortress-promtail",
+   "type": "Container",
+   "name": "fortress-promtail",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:vault-browser",
+   "type": "Container",
+   "name": "vault-browser",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:vault-storage",
+   "type": "ComposeProject",
+   "name": "vault-storage",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/vault-storage"
+   }
+  },
+  {
+   "id": "container:mediastack-qbittorrent",
+   "type": "Container",
+   "name": "mediastack-qbittorrent",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:mediastack",
+   "type": "ComposeProject",
+   "name": "mediastack",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/mediastack"
+   }
+  },
+  {
+   "id": "container:mediastack-radarr",
+   "type": "Container",
+   "name": "mediastack-radarr",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:mediastack-sonarr",
+   "type": "Container",
+   "name": "mediastack-sonarr",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:mediastack-prowlarr",
+   "type": "Container",
+   "name": "mediastack-prowlarr",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress_chromadb",
+   "type": "Container",
+   "name": "fortress_chromadb",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:n8n",
+   "type": "ComposeProject",
+   "name": "n8n",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/n8n"
+   }
+  },
+  {
+   "id": "container:fortress-cine-immich-redis-exporter",
+   "type": "Container",
+   "name": "fortress-cine-immich-redis-exporter",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:fortress",
+   "type": "ComposeProject",
+   "name": "fortress",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/monitoring"
+   }
+  },
+  {
+   "id": "container:fortress-ups-exporter",
+   "type": "Container",
+   "name": "fortress-ups-exporter",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:affine_postgres",
+   "type": "Container",
+   "name": "affine_postgres",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:affine_redis",
+   "type": "Container",
+   "name": "affine_redis",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-loki",
+   "type": "Container",
+   "name": "fortress-loki",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-beat-worker-1",
+   "type": "Container",
+   "name": "plane-beat-worker-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:plane",
+   "type": "ComposeProject",
+   "name": "plane",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/orchestration/stacks/plane"
+   }
+  },
+  {
+   "id": "container:plane-worker-1",
+   "type": "Container",
+   "name": "plane-worker-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-api-1",
+   "type": "Container",
+   "name": "plane-api-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-admin-1",
+   "type": "Container",
+   "name": "plane-admin-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-space-1",
+   "type": "Container",
+   "name": "plane-space-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-live-1",
+   "type": "Container",
+   "name": "plane-live-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-web-1",
+   "type": "Container",
+   "name": "plane-web-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-plane-mq-1",
+   "type": "Container",
+   "name": "plane-plane-mq-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-plane-minio-1",
+   "type": "Container",
+   "name": "plane-plane-minio-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-plane-db-1",
+   "type": "Container",
+   "name": "plane-plane-db-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:plane-plane-redis-1",
+   "type": "Container",
+   "name": "plane-plane-redis-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-beat-worker-1",
+   "type": "Container",
+   "name": "fortress-beat-worker-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-worker-1",
+   "type": "Container",
+   "name": "fortress-worker-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-api-1",
+   "type": "Container",
+   "name": "fortress-api-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-plane-mq-1",
+   "type": "Container",
+   "name": "fortress-plane-mq-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-plane-db-1",
+   "type": "Container",
+   "name": "fortress-plane-db-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-plane-redis-1",
+   "type": "Container",
+   "name": "fortress-plane-redis-1",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:4bf74c64847c_fortress-grafana",
+   "type": "Container",
+   "name": "4bf74c64847c_fortress-grafana",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "project:orchestration",
+   "type": "ComposeProject",
+   "name": "orchestration",
+   "source": "docker labels",
+   "props": {
+    "workdir": "~/homelab/orchestration"
+   }
+  },
+  {
+   "id": "container:fortress-cadvisor",
+   "type": "Container",
+   "name": "fortress-cadvisor",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:fortress-node-exporter",
+   "type": "Container",
+   "name": "fortress-node-exporter",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "container:n8n_postgres",
+   "type": "Container",
+   "name": "n8n_postgres",
+   "source": "docker ps -a",
+   "props": {}
+  },
+  {
+   "id": "doc:07-ollama-and-models",
+   "type": "Doc",
+   "name": "07-ollama-and-models",
+   "source": "knowledge/manuals/07-ollama-and-models.md",
+   "props": {}
+  },
+  {
+   "id": "doc:00-index",
+   "type": "Doc",
+   "name": "00-index",
+   "source": "knowledge/manuals/00-index.md",
+   "props": {}
+  },
+  {
+   "id": "doc:37-moltbot-vitalis-rag",
+   "type": "Doc",
+   "name": "37-moltbot-vitalis-rag",
+   "source": "knowledge/manuals/37-moltbot-vitalis-rag.md",
+   "props": {}
+  },
+  {
+   "id": "doc:21-immich",
+   "type": "Doc",
+   "name": "21-immich",
+   "source": "knowledge/manuals/21-immich.md",
+   "props": {}
+  },
+  {
+   "id": "doc:13-logs-and-incidents",
+   "type": "Doc",
+   "name": "13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md",
+   "props": {}
+  },
+  {
+   "id": "doc:06-schedules",
+   "type": "Doc",
+   "name": "06-schedules",
+   "source": "knowledge/manuals/06-schedules.md",
+   "props": {}
+  },
+  {
+   "id": "doc:09-security-and-boundaries",
+   "type": "Doc",
+   "name": "09-security-and-boundaries",
+   "source": "knowledge/manuals/09-security-and-boundaries.md",
+   "props": {}
+  },
+  {
+   "id": "doc:10-shell-reference",
+   "type": "Doc",
+   "name": "10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md",
+   "props": {}
+  },
+  {
+   "id": "doc:25-monitoring",
+   "type": "Doc",
+   "name": "25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md",
+   "props": {}
+  },
+  {
+   "id": "doc:35-virtual-self",
+   "type": "Doc",
+   "name": "35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md",
+   "props": {}
+  },
+  {
+   "id": "doc:12-pi-harness",
+   "type": "Doc",
+   "name": "12-pi-harness",
+   "source": "knowledge/manuals/12-pi-harness.md",
+   "props": {}
+  },
+  {
+   "id": "doc:40-agent-platform",
+   "type": "Doc",
+   "name": "40-agent-platform",
+   "source": "knowledge/manuals/40-agent-platform.md",
+   "props": {}
+  },
+  {
+   "id": "doc:39-other-projects",
+   "type": "Doc",
+   "name": "39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md",
+   "props": {}
+  },
+  {
+   "id": "doc:38-productivity-apps",
+   "type": "Doc",
+   "name": "38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md",
+   "props": {}
+  },
+  {
+   "id": "doc:22-media-and-music",
+   "type": "Doc",
+   "name": "22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md",
+   "props": {}
+  },
+  {
+   "id": "doc:02-ai-brain",
+   "type": "Doc",
+   "name": "02-ai-brain",
+   "source": "knowledge/manuals/02-ai-brain.md",
+   "props": {}
+  },
+  {
+   "id": "doc:23-backups",
+   "type": "Doc",
+   "name": "23-backups",
+   "source": "knowledge/manuals/23-backups.md",
+   "props": {}
+  },
+  {
+   "id": "doc:32-research-digest",
+   "type": "Doc",
+   "name": "32-research-digest",
+   "source": "knowledge/manuals/32-research-digest.md",
+   "props": {}
+  },
+  {
+   "id": "doc:33-memory-swap-oom",
+   "type": "Doc",
+   "name": "33-memory-swap-oom",
+   "source": "knowledge/manuals/33-memory-swap-oom.md",
+   "props": {}
+  },
+  {
+   "id": "doc:08-network-and-ports",
+   "type": "Doc",
+   "name": "08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md",
+   "props": {}
+  },
+  {
+   "id": "doc:01-machine",
+   "type": "Doc",
+   "name": "01-machine",
+   "source": "knowledge/manuals/01-machine.md",
+   "props": {}
+  },
+  {
+   "id": "doc:05-services-catalog",
+   "type": "Doc",
+   "name": "05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md",
+   "props": {}
+  },
+  {
+   "id": "doc:28-system-monitor-and-power",
+   "type": "Doc",
+   "name": "28-system-monitor-and-power",
+   "source": "knowledge/manuals/28-system-monitor-and-power.md",
+   "props": {}
+  },
+  {
+   "id": "doc:04-fortress-control",
+   "type": "Doc",
+   "name": "04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md",
+   "props": {}
+  },
+  {
+   "id": "doc:27-portainer-and-stacks",
+   "type": "Doc",
+   "name": "27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md",
+   "props": {}
+  },
+  {
+   "id": "doc:24-vault-storage",
+   "type": "Doc",
+   "name": "24-vault-storage",
+   "source": "knowledge/manuals/24-vault-storage.md",
+   "props": {}
+  },
+  {
+   "id": "doc:29-wifi-and-network-guard",
+   "type": "Doc",
+   "name": "29-wifi-and-network-guard",
+   "source": "knowledge/manuals/29-wifi-and-network-guard.md",
+   "props": {}
+  },
+  {
+   "id": "doc:20-cine-immich",
+   "type": "Doc",
+   "name": "20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md",
+   "props": {}
+  },
+  {
+   "id": "doc:31-personal-feed",
+   "type": "Doc",
+   "name": "31-personal-feed",
+   "source": "knowledge/manuals/31-personal-feed.md",
+   "props": {}
+  },
+  {
+   "id": "doc:30-kindle-dash",
+   "type": "Doc",
+   "name": "30-kindle-dash",
+   "source": "knowledge/manuals/30-kindle-dash.md",
+   "props": {}
+  },
+  {
+   "id": "doc:34-jarvis",
+   "type": "Doc",
+   "name": "34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md",
+   "props": {}
+  },
+  {
+   "id": "doc:03-gpu-vram-watchdog",
+   "type": "Doc",
+   "name": "03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md",
+   "props": {}
+  },
+  {
+   "id": "doc:11-dume",
+   "type": "Doc",
+   "name": "11-dume",
+   "source": "knowledge/manuals/11-dume.md",
+   "props": {}
+  },
+  {
+   "id": "doc:26-notifier",
+   "type": "Doc",
+   "name": "26-notifier",
+   "source": "knowledge/manuals/26-notifier.md",
+   "props": {}
+  },
+  {
+   "id": "doc:36-n8n-dexter-orchestration",
+   "type": "Doc",
+   "name": "36-n8n-dexter-orchestration",
+   "source": "knowledge/manuals/36-n8n-dexter-orchestration.md",
+   "props": {}
+  },
+  {
+   "id": "doc:disk-full",
+   "type": "Doc",
+   "name": "disk-full",
+   "source": "knowledge/runbooks/disk-full.md",
+   "props": {}
+  },
+  {
+   "id": "doc:feed-stale",
+   "type": "Doc",
+   "name": "feed-stale",
+   "source": "knowledge/runbooks/feed-stale.md",
+   "props": {}
+  },
+  {
+   "id": "doc:notifier",
+   "type": "Doc",
+   "name": "notifier",
+   "source": "knowledge/runbooks/notifier.md",
+   "props": {}
+  },
+  {
+   "id": "doc:after-reboot",
+   "type": "Doc",
+   "name": "after-reboot",
+   "source": "knowledge/runbooks/after-reboot.md",
+   "props": {}
+  },
+  {
+   "id": "doc:ai-down",
+   "type": "Doc",
+   "name": "ai-down",
+   "source": "knowledge/runbooks/ai-down.md",
+   "props": {}
+  },
+  {
+   "id": "doc:service-not-running",
+   "type": "Doc",
+   "name": "service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md",
+   "props": {}
+  },
+  {
+   "id": "doc:agent-heal",
+   "type": "Doc",
+   "name": "agent-heal",
+   "source": "knowledge/runbooks/agent-heal.md",
+   "props": {}
+  },
+  {
+   "id": "doc:gpu-vram",
+   "type": "Doc",
+   "name": "gpu-vram",
+   "source": "knowledge/runbooks/gpu-vram.md",
+   "props": {}
+  },
+  {
+   "id": "doc:model-queue-down",
+   "type": "Doc",
+   "name": "model-queue-down",
+   "source": "knowledge/runbooks/model-queue-down.md",
+   "props": {}
+  },
+  {
+   "id": "doc:backup-failing",
+   "type": "Doc",
+   "name": "backup-failing",
+   "source": "knowledge/runbooks/backup-failing.md",
+   "props": {}
+  },
+  {
+   "id": "doc:wifi-guard",
+   "type": "Doc",
+   "name": "wifi-guard",
+   "source": "knowledge/runbooks/wifi-guard.md",
+   "props": {}
+  },
+  {
+   "id": "doc:ollama",
+   "type": "Doc",
+   "name": "ollama",
+   "source": "knowledge/runbooks/ollama.md",
+   "props": {}
+  },
+  {
+   "id": "doc:container-unhealthy",
+   "type": "Doc",
+   "name": "container-unhealthy",
+   "source": "knowledge/runbooks/container-unhealthy.md",
+   "props": {}
+  },
+  {
+   "id": "doc:oda-preview-down",
+   "type": "Doc",
+   "name": "oda-preview-down",
+   "source": "knowledge/runbooks/oda-preview-down.md",
+   "props": {}
+  },
+  {
+   "id": "doc:slow-ai",
+   "type": "Doc",
+   "name": "slow-ai",
+   "source": "knowledge/runbooks/slow-ai.md",
+   "props": {}
+  },
+  {
+   "id": "doc:boot-profile",
+   "type": "Doc",
+   "name": "boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md",
+   "props": {}
+  },
+  {
+   "id": "doc:watchdog",
+   "type": "Doc",
+   "name": "watchdog",
+   "source": "knowledge/runbooks/watchdog.md",
+   "props": {}
+  },
+  {
+   "id": "doc:agent-container-down",
+   "type": "Doc",
+   "name": "agent-container-down",
+   "source": "knowledge/runbooks/agent-container-down.md",
+   "props": {}
+  },
+  {
+   "id": "doc:dume-trouble",
+   "type": "Doc",
+   "name": "dume-trouble",
+   "source": "knowledge/runbooks/dume-trouble.md",
+   "props": {}
+  },
+  {
+   "id": "doc:agent-gateway-down",
+   "type": "Doc",
+   "name": "agent-gateway-down",
+   "source": "knowledge/runbooks/agent-gateway-down.md",
+   "props": {}
+  },
+  {
+   "id": "doc:health-alerts",
+   "type": "Doc",
+   "name": "health-alerts",
+   "source": "knowledge/runbooks/health-alerts.md",
+   "props": {}
+  }
+ ],
+ "edges": [
+  {
+   "from": "service:orchestration",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/orchestration",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DETECTED_BY",
+   "to": "container:fortress-portainer",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/n8n",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DETECTED_BY",
+   "to": "container:n8n_server",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/monitoring",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DETECTED_BY",
+   "to": "container:fortress-prometheus",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/notifier",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DETECTED_BY",
+   "to": "container:notifier-notifier-1",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "USES_GPU",
+   "to": "gpu:rtx5070ti",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/cine-immich",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DETECTED_BY",
+   "to": "container:cine_immich_server",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:immich",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/orchestration/stacks/immich",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:immich",
+   "type": "DETECTED_BY",
+   "to": "container:fortress-immich-server",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:plane",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/orchestration/stacks/plane",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:plane",
+   "type": "DETECTED_BY",
+   "to": "container:plane-proxy-1",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:affine",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/affine",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:affine",
+   "type": "DETECTED_BY",
+   "to": "container:affine_server",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/anytype",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DETECTED_BY",
+   "to": "container:anytype_sync_bundle",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DEPENDS_ON",
+   "to": "service:ai_llama",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/jarvis",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DETECTED_BY",
+   "to": "container:jarvis-gateway",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:vault",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/vault-storage",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:vault",
+   "type": "DETECTED_BY",
+   "to": "container:vault-minio",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DEFINED_BY",
+   "to": "compose:~/mediastack",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DETECTED_BY",
+   "to": "container:mediastack-jellyfin",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DETECTED_BY",
+   "to": "port:8077",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "STARTS_WITH",
+   "to": "script:~/homelab/personal-feed/start_backend.sh",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "USES_GPU",
+   "to": "gpu:rtx5070ti",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DETECTED_BY",
+   "to": "port:8081",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "STARTS_WITH",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "STOPS_WITH",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DEPENDS_ON",
+   "to": "service:ai_llama",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DETECTED_BY",
+   "to": "port:8181",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DEPENDS_ON",
+   "to": "service:modelq",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DETECTED_BY",
+   "to": "port:8190",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:oda_preview",
+   "type": "DETECTED_BY",
+   "to": "port:7460",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "STARTS_WITH",
+   "to": "script:~/homelab/control/vram-watchdog.sh",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/LifePath",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DETECTED_BY",
+   "to": "port:39081",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/vitalis",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DETECTED_BY",
+   "to": "port:39082",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:music",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/orchestration/stacks/music-service",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:music",
+   "type": "DETECTED_BY",
+   "to": "port:6544",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DEPENDS_ON",
+   "to": "service:ai_llama",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/virtual-self-memory",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DETECTED_BY",
+   "to": "container:virtual_self_api",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DEPENDS_ON",
+   "to": "service:virtual_self",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DEPENDS_ON",
+   "to": "service:ai_llama",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DEFINED_BY",
+   "to": "compose:~/homelab/virtual-self-memory",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DETECTED_BY",
+   "to": "container:virtual_self_archive_sync",
+   "source": "~/homelab/control/services.yaml"
+  },
+  {
+   "from": "brain:hauhaucs_q4",
+   "type": "LOADS",
+   "to": "model:Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-default quant.gguf",
+   "source": "~/homelab/control/ai_models.yaml"
+  },
+  {
+   "from": "brain:hauhaucs_iq3",
+   "type": "LOADS",
+   "to": "model:Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-IQ3_M.gguf",
+   "source": "~/homelab/control/ai_models.yaml"
+  },
+  {
+   "from": "brain:ollama_smart",
+   "type": "LOADS",
+   "to": "model:ollama:qwen3.6:27b",
+   "source": "~/homelab/control/ai_models.yaml"
+  },
+  {
+   "from": "brain:ollama_fast",
+   "type": "LOADS",
+   "to": "model:ollama:qwen3.6:35b-a3b",
+   "source": "~/homelab/control/ai_models.yaml"
+  },
+  {
+   "from": "brain:hauhaucs_q4",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:hauhaucs_iq3",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "brain:hauhaucs_q4",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:ollama_smart",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "brain:hauhaucs_q4",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:ollama_fast",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "brain:hauhaucs_iq3",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:ollama_smart",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "brain:hauhaucs_iq3",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:ollama_fast",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "brain:ollama_smart",
+   "type": "CONFLICTS_WITH",
+   "to": "brain:ollama_fast",
+   "source": "~/homelab/control/ai_models.yaml (only one GPU-heavy brain at a time)"
+  },
+  {
+   "from": "job:vault_backup_exporter",
+   "type": "CHECKS",
+   "to": "container:fortress-vault-backup-exporter",
+   "source": "~/homelab/control/host_jobs.yaml"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "SERVES",
+   "to": "port:8081",
+   "source": "~/bin/llama-server-ctl"
+  },
+  {
+   "from": "script:~/bin/llama-server-ctl",
+   "type": "UNLOADS",
+   "to": "service:ollama",
+   "source": "~/bin/llama-server-ctl unload_ollama_gpu"
+  },
+  {
+   "from": "service:ollama",
+   "type": "SERVES",
+   "to": "port:11434",
+   "source": "/etc/systemd/system/ollama.service.d/override.conf"
+  },
+  {
+   "from": "script:~/homelab/control/vram-watchdog.sh",
+   "type": "STOPS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/vram-watchdog.sh"
+  },
+  {
+   "from": "script:~/homelab/control/vram-watchdog.sh",
+   "type": "STARTS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/vram-watchdog.sh"
+  },
+  {
+   "from": "script:~/homelab/control/vram-watchdog.sh",
+   "type": "NOTIFIES",
+   "to": "port:8001",
+   "source": "~/homelab/control/vram-watchdog.sh"
+  },
+  {
+   "from": "script:~/homelab/control/vram-watchdog.sh",
+   "type": "WRITES",
+   "to": "state:ai-paused",
+   "source": "~/homelab/control/vram-watchdog.sh"
+  },
+  {
+   "from": "file:~/homelab/personal-feed/start_backend.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/personal-feed/start_backend.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/ODA/lib/oda/core.py",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/ODA/lib/oda/core.py (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/virtual-self-memory/scripts/make-chat-ready.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/virtual-self-memory/scripts/make-chat-ready.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/virtual-self-memory/scripts/overnight-run.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/virtual-self-memory/scripts/overnight-run.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/research-digest/install.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/research-digest/install.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/control/services.yaml",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/services.yaml (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/control/lib/actions.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/lib/actions.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/control/lib/gpu.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/lib/gpu.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/homelab/control/vram-watchdog.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/homelab/control/vram-watchdog.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/bin/hauhaucs-install-validate.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/bin/hauhaucs-install-validate.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "file:~/bin/hauhaucs-download-q4km.sh",
+   "type": "CALLS",
+   "to": "script:~/bin/llama-server-ctl",
+   "source": "~/bin/hauhaucs-download-q4km.sh (grep llama-server-ctl)"
+  },
+  {
+   "from": "cron:0 6 * * *:af95d9",
+   "type": "WRITES",
+   "to": "log:out/cron.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:@reboot:a9ceb9",
+   "type": "RUNS",
+   "to": "script:~/homelab/control/fortress",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:@reboot:a9ceb9",
+   "type": "WRITES",
+   "to": "log:~/homelab/control/boot.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:0 5 * * *:271f54",
+   "type": "WRITES",
+   "to": "log:out/learn.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:*/15 * * * *:b6e2aa",
+   "type": "WRITES",
+   "to": "log:~/kindle-dash/render.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:*/10 * * * *:22bd6e",
+   "type": "RUNS",
+   "to": "script:~/bin/wifi-safe-switch.sh",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:*/10 * * * *:22bd6e",
+   "type": "WRITES",
+   "to": "log:~/wifi-scan-reports/wifi-guard-cron.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:0 * * * *:8d85f5",
+   "type": "RUNS",
+   "to": "script:~/homelab/control/fortress",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:0 * * * *:8d85f5",
+   "type": "WRITES",
+   "to": "log:~/.local/state/homelab/health-cron.log",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:0 3 * * *:363e17",
+   "type": "RUNS",
+   "to": "script:~/homelab/vault-backup/scripts/cron-daily.sh",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:0 4 * * 0:68b903",
+   "type": "RUNS",
+   "to": "script:~/homelab/vault-backup/scripts/cron-photos.sh",
+   "source": "crontab -l"
+  },
+  {
+   "from": "cron:@reboot:0a9bdf",
+   "type": "RUNS",
+   "to": "script:~/homelab/vault-backup/scripts/bootstrap-keepalive.sh",
+   "source": "crontab -l"
+  },
+  {
+   "from": "alias:sys-check",
+   "type": "RUNS",
+   "to": "script:~/homelab/system-monitor/display_stats.py",
+   "source": "~/.bashrc:128"
+  },
+  {
+   "from": "alias:checkgpu",
+   "type": "RUNS",
+   "to": "script:~/homelab/system-monitor/check_gpu_usage.sh",
+   "source": "~/.bashrc:129"
+  },
+  {
+   "from": "alias:cineImport",
+   "type": "RUNS",
+   "to": "script:~/homelab/cine-immich/scripts/cine_import_menu.sh",
+   "source": "~/.bashrc:137"
+  },
+  {
+   "from": "alias:migrateCine",
+   "type": "RUNS",
+   "to": "script:~/homelab/cine-immich/scripts/migrate_from_source.sh",
+   "source": "~/.bashrc:149"
+  },
+  {
+   "from": "alias:migrateCineDry",
+   "type": "RUNS",
+   "to": "script:~/homelab/cine-immich/scripts/migrate_from_source.sh",
+   "source": "~/.bashrc:150"
+  },
+  {
+   "from": "alias:n8n-on",
+   "type": "RUNS",
+   "to": "script:~/homelab/n8n/n8n_scheduler.sh",
+   "source": "~/.bashrc:165"
+  },
+  {
+   "from": "alias:n8n-off",
+   "type": "RUNS",
+   "to": "script:~/homelab/n8n/n8n_scheduler.sh",
+   "source": "~/.bashrc:166"
+  },
+  {
+   "from": "alias:nfa",
+   "type": "RUNS",
+   "to": "script:~/homelab/core-orchestration/fortress_cli.cjs",
+   "source": "~/.bashrc:167"
+  },
+  {
+   "from": "alias:share-media",
+   "type": "RUNS",
+   "to": "script:~/.local/bin/proxy-share.sh",
+   "source": "~/.bashrc:456"
+  },
+  {
+   "from": "alias:expose",
+   "type": "RUNS",
+   "to": "script:~/.local/bin/proxy-share.sh",
+   "source": "~/.bashrc:457"
+  },
+  {
+   "from": "alias:vself-chat",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:468"
+  },
+  {
+   "from": "alias:vself-bake",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:471"
+  },
+  {
+   "from": "alias:vself-status",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:472"
+  },
+  {
+   "from": "alias:vself-archive-sync",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:473"
+  },
+  {
+   "from": "alias:vself-archive-run",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:474"
+  },
+  {
+   "from": "alias:vself-archive-status",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:475"
+  },
+  {
+   "from": "alias:virtual-self",
+   "type": "RUNS",
+   "to": "script:~/homelab/virtual-self-memory/scripts/fortress-cli.sh",
+   "source": "~/.bashrc:476"
+  },
+  {
+   "from": "alias:fortress-vitals",
+   "type": "RUNS",
+   "to": "script:~/bin/fortress-vitals",
+   "source": "~/.bashrc:481"
+  },
+  {
+   "from": "alias:plaintop",
+   "type": "RUNS",
+   "to": "script:~/homelab/system-monitor/plaintop.py",
+   "source": "~/.bashrc:529"
+  },
+  {
+   "from": "alias:rdigest",
+   "type": "RUNS",
+   "to": "script:~/homelab/research-digest/research-digest-cli.sh",
+   "source": "~/.bashrc:532"
+  },
+  {
+   "from": "container:virtual_self_worker",
+   "type": "PART_OF",
+   "to": "project:virtual-self",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:virtual_self_api",
+   "type": "PART_OF",
+   "to": "project:virtual-self",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:notifier-notifier-1",
+   "type": "PART_OF",
+   "to": "project:notifier",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:virtual_self_searxng",
+   "type": "PART_OF",
+   "to": "project:virtual-self",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:virtual_self_knowledge_gateway",
+   "type": "PART_OF",
+   "to": "project:virtual-self",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:virtual_self_postgres",
+   "type": "PART_OF",
+   "to": "project:virtual-self",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-immich-server",
+   "type": "PART_OF",
+   "to": "project:immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:affine_server",
+   "type": "PART_OF",
+   "to": "project:affine",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:affine_migration_job",
+   "type": "PART_OF",
+   "to": "project:affine",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-immich-ml",
+   "type": "PART_OF",
+   "to": "project:immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-immich-postgres",
+   "type": "PART_OF",
+   "to": "project:immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-immich-redis",
+   "type": "PART_OF",
+   "to": "project:immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-meilisearch-play",
+   "type": "PART_OF",
+   "to": "project:meilisearch-play",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:voicebox",
+   "type": "PART_OF",
+   "to": "project:voicebox",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_gateway",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_search_proxy",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_broll_worker",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_broll_watcher",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_server",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_microservices",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:jarvis-gateway",
+   "type": "PART_OF",
+   "to": "project:jarvis",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:jarvis-tts",
+   "type": "PART_OF",
+   "to": "project:jarvis",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:jarvis-whisper",
+   "type": "PART_OF",
+   "to": "project:jarvis",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine-immich-broll_face_worker-1",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_redis",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_machine_learning",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:cine_immich_postgres",
+   "type": "PART_OF",
+   "to": "project:cine-immich",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:anytype_sync_bundle",
+   "type": "PART_OF",
+   "to": "project:anytype",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-vault-backup-exporter",
+   "type": "PART_OF",
+   "to": "project:monitoring",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-promtail",
+   "type": "PART_OF",
+   "to": "project:monitoring",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:vault-browser",
+   "type": "PART_OF",
+   "to": "project:vault-storage",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:vault-minio",
+   "type": "PART_OF",
+   "to": "project:vault-storage",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:mediastack-qbittorrent",
+   "type": "PART_OF",
+   "to": "project:mediastack",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:mediastack-radarr",
+   "type": "PART_OF",
+   "to": "project:mediastack",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:mediastack-jellyfin",
+   "type": "PART_OF",
+   "to": "project:mediastack",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:mediastack-sonarr",
+   "type": "PART_OF",
+   "to": "project:mediastack",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:mediastack-prowlarr",
+   "type": "PART_OF",
+   "to": "project:mediastack",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress_chromadb",
+   "type": "PART_OF",
+   "to": "project:n8n",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:n8n_server",
+   "type": "PART_OF",
+   "to": "project:n8n",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-cine-immich-redis-exporter",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-prometheus",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-ups-exporter",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:affine_postgres",
+   "type": "PART_OF",
+   "to": "project:affine",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:affine_redis",
+   "type": "PART_OF",
+   "to": "project:affine",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-loki",
+   "type": "PART_OF",
+   "to": "project:monitoring",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-beat-worker-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-worker-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-api-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-proxy-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-admin-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-space-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-live-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-web-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-plane-mq-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-plane-minio-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-plane-db-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:plane-plane-redis-1",
+   "type": "PART_OF",
+   "to": "project:plane",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-beat-worker-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-worker-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-api-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-plane-mq-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-plane-db-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-plane-redis-1",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:4bf74c64847c_fortress-grafana",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-portainer",
+   "type": "PART_OF",
+   "to": "project:orchestration",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-cadvisor",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:fortress-node-exporter",
+   "type": "PART_OF",
+   "to": "project:fortress",
+   "source": "docker labels"
+  },
+  {
+   "from": "container:n8n_postgres",
+   "type": "PART_OF",
+   "to": "project:n8n",
+   "source": "docker labels"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:07-ollama-and-models",
+   "source": "knowledge/manuals/07-ollama-and-models.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:07-ollama-and-models",
+   "source": "knowledge/manuals/07-ollama-and-models.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:00-index",
+   "source": "knowledge/manuals/00-index.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:37-moltbot-vitalis-rag",
+   "source": "knowledge/manuals/37-moltbot-vitalis-rag.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:37-moltbot-vitalis-rag",
+   "source": "knowledge/manuals/37-moltbot-vitalis-rag.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:37-moltbot-vitalis-rag",
+   "source": "knowledge/manuals/37-moltbot-vitalis-rag.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:37-moltbot-vitalis-rag",
+   "source": "knowledge/manuals/37-moltbot-vitalis-rag.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:21-immich",
+   "source": "knowledge/manuals/21-immich.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:21-immich",
+   "source": "knowledge/manuals/21-immich.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:21-immich",
+   "source": "knowledge/manuals/21-immich.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:21-immich",
+   "source": "knowledge/manuals/21-immich.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:21-immich",
+   "source": "knowledge/manuals/21-immich.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:13-logs-and-incidents",
+   "source": "knowledge/manuals/13-logs-and-incidents.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:06-schedules",
+   "source": "knowledge/manuals/06-schedules.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:06-schedules",
+   "source": "knowledge/manuals/06-schedules.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:06-schedules",
+   "source": "knowledge/manuals/06-schedules.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:06-schedules",
+   "source": "knowledge/manuals/06-schedules.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:09-security-and-boundaries",
+   "source": "knowledge/manuals/09-security-and-boundaries.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:09-security-and-boundaries",
+   "source": "knowledge/manuals/09-security-and-boundaries.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:09-security-and-boundaries",
+   "source": "knowledge/manuals/09-security-and-boundaries.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:10-shell-reference",
+   "source": "knowledge/manuals/10-shell-reference.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:25-monitoring",
+   "source": "knowledge/manuals/25-monitoring.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:35-virtual-self",
+   "source": "knowledge/manuals/35-virtual-self.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:40-agent-platform",
+   "source": "knowledge/manuals/40-agent-platform.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:40-agent-platform",
+   "source": "knowledge/manuals/40-agent-platform.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:40-agent-platform",
+   "source": "knowledge/manuals/40-agent-platform.md"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:40-agent-platform",
+   "source": "knowledge/manuals/40-agent-platform.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:39-other-projects",
+   "source": "knowledge/manuals/39-other-projects.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:38-productivity-apps",
+   "source": "knowledge/manuals/38-productivity-apps.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:22-media-and-music",
+   "source": "knowledge/manuals/22-media-and-music.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:02-ai-brain",
+   "source": "knowledge/manuals/02-ai-brain.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:02-ai-brain",
+   "source": "knowledge/manuals/02-ai-brain.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:23-backups",
+   "source": "knowledge/manuals/23-backups.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:32-research-digest",
+   "source": "knowledge/manuals/32-research-digest.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:32-research-digest",
+   "source": "knowledge/manuals/32-research-digest.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:32-research-digest",
+   "source": "knowledge/manuals/32-research-digest.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:33-memory-swap-oom",
+   "source": "knowledge/manuals/33-memory-swap-oom.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:33-memory-swap-oom",
+   "source": "knowledge/manuals/33-memory-swap-oom.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:08-network-and-ports",
+   "source": "knowledge/manuals/08-network-and-ports.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:01-machine",
+   "source": "knowledge/manuals/01-machine.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:01-machine",
+   "source": "knowledge/manuals/01-machine.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:05-services-catalog",
+   "source": "knowledge/manuals/05-services-catalog.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:28-system-monitor-and-power",
+   "source": "knowledge/manuals/28-system-monitor-and-power.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:28-system-monitor-and-power",
+   "source": "knowledge/manuals/28-system-monitor-and-power.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:04-fortress-control",
+   "source": "knowledge/manuals/04-fortress-control.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:27-portainer-and-stacks",
+   "source": "knowledge/manuals/27-portainer-and-stacks.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:24-vault-storage",
+   "source": "knowledge/manuals/24-vault-storage.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:24-vault-storage",
+   "source": "knowledge/manuals/24-vault-storage.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:24-vault-storage",
+   "source": "knowledge/manuals/24-vault-storage.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:24-vault-storage",
+   "source": "knowledge/manuals/24-vault-storage.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:29-wifi-and-network-guard",
+   "source": "knowledge/manuals/29-wifi-and-network-guard.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:29-wifi-and-network-guard",
+   "source": "knowledge/manuals/29-wifi-and-network-guard.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:20-cine-immich",
+   "source": "knowledge/manuals/20-cine-immich.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:31-personal-feed",
+   "source": "knowledge/manuals/31-personal-feed.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:31-personal-feed",
+   "source": "knowledge/manuals/31-personal-feed.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:31-personal-feed",
+   "source": "knowledge/manuals/31-personal-feed.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:31-personal-feed",
+   "source": "knowledge/manuals/31-personal-feed.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:30-kindle-dash",
+   "source": "knowledge/manuals/30-kindle-dash.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:30-kindle-dash",
+   "source": "knowledge/manuals/30-kindle-dash.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:34-jarvis",
+   "source": "knowledge/manuals/34-jarvis.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:03-gpu-vram-watchdog",
+   "source": "knowledge/manuals/03-gpu-vram-watchdog.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:11-dume",
+   "source": "knowledge/manuals/11-dume.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:affine",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:virtual_self",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:virtual_self_archive",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:26-notifier",
+   "source": "knowledge/manuals/26-notifier.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:36-n8n-dexter-orchestration",
+   "source": "knowledge/manuals/36-n8n-dexter-orchestration.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:36-n8n-dexter-orchestration",
+   "source": "knowledge/manuals/36-n8n-dexter-orchestration.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:36-n8n-dexter-orchestration",
+   "source": "knowledge/manuals/36-n8n-dexter-orchestration.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:disk-full",
+   "source": "knowledge/runbooks/disk-full.md"
+  },
+  {
+   "from": "service:lifepath",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:disk-full",
+   "source": "knowledge/runbooks/disk-full.md"
+  },
+  {
+   "from": "service:vitalis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:disk-full",
+   "source": "knowledge/runbooks/disk-full.md"
+  },
+  {
+   "from": "service:music",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:disk-full",
+   "source": "knowledge/runbooks/disk-full.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:feed-stale",
+   "source": "knowledge/runbooks/feed-stale.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:notifier",
+   "source": "knowledge/runbooks/notifier.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:after-reboot",
+   "source": "knowledge/runbooks/after-reboot.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:after-reboot",
+   "source": "knowledge/runbooks/after-reboot.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:ai-down",
+   "source": "knowledge/runbooks/ai-down.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:ai-down",
+   "source": "knowledge/runbooks/ai-down.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:anytype",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:mediastack",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:oda_preview",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:service-not-running",
+   "source": "knowledge/runbooks/service-not-running.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-heal",
+   "source": "knowledge/runbooks/agent-heal.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-heal",
+   "source": "knowledge/runbooks/agent-heal.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-heal",
+   "source": "knowledge/runbooks/agent-heal.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:model-queue-down",
+   "source": "knowledge/runbooks/model-queue-down.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:backup-failing",
+   "source": "knowledge/runbooks/backup-failing.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:container-unhealthy",
+   "source": "knowledge/runbooks/container-unhealthy.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:container-unhealthy",
+   "source": "knowledge/runbooks/container-unhealthy.md"
+  },
+  {
+   "from": "service:oda_preview",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:oda-preview-down",
+   "source": "knowledge/runbooks/oda-preview-down.md"
+  },
+  {
+   "from": "service:jarvis",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:slow-ai",
+   "source": "knowledge/runbooks/slow-ai.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:slow-ai",
+   "source": "knowledge/runbooks/slow-ai.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:monitoring",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:vault",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:personal_feed",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:boot-profile",
+   "source": "knowledge/runbooks/boot-profile.md"
+  },
+  {
+   "from": "service:cine_immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:watchdog",
+   "source": "knowledge/runbooks/watchdog.md"
+  },
+  {
+   "from": "service:vram_watchdog",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:watchdog",
+   "source": "knowledge/runbooks/watchdog.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-container-down",
+   "source": "knowledge/runbooks/agent-container-down.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-container-down",
+   "source": "knowledge/runbooks/agent-container-down.md"
+  },
+  {
+   "from": "service:immich",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-container-down",
+   "source": "knowledge/runbooks/agent-container-down.md"
+  },
+  {
+   "from": "service:plane",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-container-down",
+   "source": "knowledge/runbooks/agent-container-down.md"
+  },
+  {
+   "from": "service:modelq",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:dume-trouble",
+   "source": "knowledge/runbooks/dume-trouble.md"
+  },
+  {
+   "from": "service:orchestration",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-gateway-down",
+   "source": "knowledge/runbooks/agent-gateway-down.md"
+  },
+  {
+   "from": "service:n8n",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-gateway-down",
+   "source": "knowledge/runbooks/agent-gateway-down.md"
+  },
+  {
+   "from": "service:agent_gateway",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:agent-gateway-down",
+   "source": "knowledge/runbooks/agent-gateway-down.md"
+  },
+  {
+   "from": "service:notifier",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:health-alerts",
+   "source": "knowledge/runbooks/health-alerts.md"
+  },
+  {
+   "from": "service:ai_llama",
+   "type": "DOCUMENTED_BY",
+   "to": "doc:health-alerts",
+   "source": "knowledge/runbooks/health-alerts.md"
+  }
+ ],
+ "sources": {
+  "~/homelab/control/services.yaml": "b689a219f9c4e62b4f722f0fe7aac0f48e8e3b36c6aa6778ff4d9e0202e3cdbe",
+  "~/homelab/control/ai_models.yaml": "0f35fc11d8c0274108d5b360f7119b2a254ee962649a92dc2ff8d1059b434e7c",
+  "~/homelab/control/host_jobs.yaml": "165486a27a4de5e8be3460048796c17adc25a5fb187b30a7d7863573708f4637",
+  "~/bin/llama-server-ctl": "191031d26837967b0ed6fd4ce1be3d95b6fa289adf8f12cca13394224c3f1589",
+  "~/homelab/control/vram-watchdog.sh": "42ce26c32474098051c5d965747d9700924f3d52efd5ab1a70f2b3e669f6997b",
+  "~/homelab/personal-feed/start_backend.sh": "c3dbd9a6324e5450e17ea64d24cd24f64e13d937cd9cabf68e3c0ea68846645b",
+  "~/homelab/ODA/lib/oda/core.py": "51bb3a1f510c4dcf949c44e14f67ebb4c5341e7a23d88aea0f02f621205e5c11",
+  "~/homelab/virtual-self-memory/scripts/make-chat-ready.sh": "5fb1b1354a443ca34d429bce3409ecad36cf9d8c49ce8e8f29eb6eda1786cf6d",
+  "~/homelab/virtual-self-memory/scripts/overnight-run.sh": "fdffc79fddddaf1c7e67b1dfb8eadb042914a26c38363e7314e7762d5753b1fe",
+  "~/homelab/research-digest/install.sh": "9ef7115b56f44d1ed794ea52cbb0d4873a56457b7e60690991ec839131902ed9",
+  "~/homelab/control/lib/actions.sh": "2f3bcd9b387f38493f39286aa06e091b198515e5a9e009bcf21d188766cd8660",
+  "~/homelab/control/lib/gpu.sh": "577eafd9d142a88b14a0bc8ffd38b51e4bcb88ac0ecb8136fae5d9b9f6cc0246",
+  "~/bin/hauhaucs-install-validate.sh": "a5fd4da34a9c50124dcb6dda0470c48ac48c716f9455ab81244f10b50ae4a7ca",
+  "~/bin/hauhaucs-download-q4km.sh": "3c8ef1927b8a13e90c3f2c3e649f7d62286f5f6d8b7140d3fb9f5bfd184e4777",
+  "~/.bashrc": "a3861aadef7fc366b580d9a92c1a4e38bd54de5f02aece8335990133d779b634"
+ }
+}
