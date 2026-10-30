@@ -1,14 +1,32 @@
+<div align="center">
+
 # DUM-E
 
-**DUM-E** is a local, tool-restricted maintenance assistant for a personal homelab. It runs a small agent (built on [pi](https://github.com/mariozechner/pi)) that can **read** machine state and homelab documentation, **explain** what is going on, and **propose** maintenance actions. It never executes destructive or state-changing work on its own.
+**A read-only homelab copilot — observe, explain, propose. Never execute alone.**
 
-## What it is
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Pi Agent](https://img.shields.io/badge/Built_on-pi-111?style=flat-square)](https://github.com/mariozechner/pi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey?style=flat-square)](https://kernel.org/)
 
-- A **read-only observability layer**: GPU, disks, services, containers, schedules, logs, backups, and a structured knowledge base (manuals + runbooks).
-- A **proposal gate**: state changes go through `propose_action` → owner runs `dume approve <ID>` in a separate terminal with explicit confirmation (including typed phrases for permanent deletes).
-- A **dedicated low-privilege runtime user** (`dume`) so the model is not the same UNIX user as the operator.
+</div>
 
-Bundled `knowledge/` content describes a **generic homelab layout** (`~/homelab/…`). You are expected to adapt paths, service names, and manuals to your environment.
+---
+
+## Why it exists
+
+Homelabs are powerful and fragile: GPUs, containers, backups, and schedules fail in ways that are hard to explain at 2 a.m. **DUM-E** is a **local, tool-restricted maintenance assistant** that reads machine state and your documentation, explains what is going on, and **proposes** fixes — while **destructive or state-changing work always waits for explicit human approval** in a separate terminal.
+
+## Features
+
+| | |
+|---|---|
+| **Read-only observability** | GPU, disks, services, containers, schedules, logs, backups |
+| **Structured knowledge** | Manuals, runbooks, and a navigable graph under `knowledge/` |
+| **Proposal gate** | `propose_action` → owner runs `dume approve <ID>` with confirmation |
+| **Low-privilege runtime** | Dedicated `dume` system user — not your daily login |
+| **Path guard & redaction** | Secrets, `.env`, SSH, and backup creds blocked from tools |
+| **Deletion Mandate** | Every approvable action in `config/actions.json` declares what it deletes |
 
 ## Architecture
 
@@ -23,29 +41,21 @@ dume  ──sudo──► pi + DUM-E ext ──sudo──► dume-tool (gateway)
 dume approve <ID>  ──► runs approved command as owner
 ```
 
-- **`bin/dume`**: owner CLI (chat, doctor, approve/reject, manual search).
-- **`bin/dume-tool`**: gateway; the only entry point the agent user may invoke via sudo.
-- **`lib/dume/`**: core paths, redaction, tools, action catalog, graph builder.
-- **`config/actions.json`**: allowlisted approvable actions (Deletion Mandate: every action declares what it deletes).
-- **`prompts/system.md`**: agent system prompt.
-- **`ext/dume.ts`**: pi extension exposing only DUM-E tools.
+| Component | Role |
+|-----------|------|
+| `bin/dume` | Owner CLI — chat, doctor, approve/reject, manual search |
+| `bin/dume-tool` | Gateway; sole sudo entry for the agent user |
+| `lib/dume/` | Paths, redaction, tools, action catalog, graph builder |
+| `config/actions.json` | Allowlisted approvable actions |
+| `ext/dume.ts` | pi extension exposing only DUM-E tools |
 
-Environment overrides (optional): `HOMELAB_ROOT`, `DUME_ROOT`, `DUME_HOME`, `DUME_OWNER`, `DUME_MODEL`.
+Optional env: `HOMELAB_ROOT`, `DUME_ROOT`, `DUME_HOME`, `DUME_OWNER`, `DUME_MODEL`.
 
-## Safety model
+Bundled `knowledge/` describes a **generic homelab layout** (`~/homelab/…`). Adapt paths, service names, and manuals to your environment.
 
-1. **Separate user**: install creates system user `dume` with no login shell; agent sessions live under `/var/lib/dume`.
-2. **Single sudo rule**: `dume` may run only `bin/dume-tool` as the homelab owner—nothing else.
-3. **No shell for the model**: pi built-in tools are disabled; only registered DUM-E tools are available.
-4. **Path guard + redaction**: protected paths (secrets, `.env`, SSH, backup credentials) are blocked; tool output is scanned for tokens/passwords.
-5. **Human approval**: proposals expire after 30 minutes; permanent deletes require an extra typed phrase (e.g. `PRUNE`).
-6. **Knowledge edits**: owner-directed only; proposals show a diff before apply.
+## Quick start
 
-See `knowledge/manuals/09-security-and-boundaries.md` and `knowledge/manuals/11-dume.md` for the full model.
-
-## Install
-
-**Requirements**: Linux, Node ≥ 20, global `@mariozechner/pi-coding-agent`, passwordless sudo for install steps, a local OpenAI-compatible model endpoint (default config points at `http://127.0.0.1:8181/v1`).
+**Requirements:** Linux, Node ≥ 20, global `@mariozechner/pi-coding-agent`, passwordless sudo for install steps, local OpenAI-compatible endpoint (default `http://127.0.0.1:8181/v1`).
 
 ```bash
 git clone https://github.com/Vector26/DUM-E.git ~/homelab/DUM-E
@@ -53,20 +63,44 @@ cd ~/homelab/DUM-E
 bash install.sh
 ```
 
-`install.sh` creates `/opt/dume`, `/etc/sudoers.d/dume`, symlinks `~/bin/dume`, and runs smoke tests. Customize model id and paths before or after install via environment variables and `config/actions.json`.
+`install.sh` creates `/opt/dume`, `/etc/sudoers.d/dume`, symlinks `~/bin/dume`, and runs smoke tests. Customize model id and paths via environment variables and `config/actions.json`.
 
-**Uninstall**: `bash uninstall.sh` (keeps the repo and knowledge; optional history purge).
-
-## Development
+**Uninstall:** `bash uninstall.sh` (keeps repo and knowledge; optional history purge).
 
 ```bash
-cd tests && python3 -m pytest   # when present
-dume doctor                     # deterministic health scan
-dume rebuild-graph              # refresh knowledge/graph.json from ~/homelab/control/*.yaml
+dume doctor          # deterministic health scan
+dume rebuild-graph   # refresh knowledge/graph.json from ~/homelab/control/*.yaml
 ```
 
-Long-form design notes: [DUM-E.md](./DUM-E.md) (historical plan; homelab-specific examples are illustrative).
+## Safety model
 
-## License
+1. **Separate user** — `dume` has no login shell; sessions live under `/var/lib/dume`.
+2. **Single sudo rule** — only `bin/dume-tool` as the homelab owner.
+3. **No shell for the model** — pi built-ins disabled; only registered DUM-E tools.
+4. **Human approval** — proposals expire after 30 minutes; permanent deletes need a typed phrase (e.g. `PRUNE`).
+5. **Knowledge edits** — owner-directed; proposals show a diff before apply.
 
-MIT — see [LICENSE](./LICENSE).
+Details: `knowledge/manuals/09-security-and-boundaries.md`, `knowledge/manuals/11-dume.md`.
+
+> **What makes it different**
+>
+> Most “AI ops” demos give the model a shell. DUM-E inverts that: **read everything, change nothing without a second human in the loop** — with a dedicated UNIX user, allowlisted actions, and redaction baked in.
+
+## Status
+
+| Area | State |
+|------|--------|
+| Install / doctor | Production-oriented for personal homelabs |
+| Knowledge base | Generic templates — you customize to your stack |
+| Tests | `cd tests && python3 -m pytest` when present |
+| Design notes | [DUM-E.md](./DUM-E.md) (historical plan; examples illustrative) |
+
+---
+
+<div align="center">
+
+**MIT** — see [LICENSE](./LICENSE)
+
+Built by **[Vector26](https://github.com/Vector26)** · Safety-first homelab AI
+
+</div>
